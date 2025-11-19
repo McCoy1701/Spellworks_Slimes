@@ -1,0 +1,34 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Iinclude/",
+      "-ggdb",
+      "-o",
+      "obj/native/stage.o",
+      "src/stage.c"
+    ],
+    "directory": "/home/jacob/src/dev/C/Spellworks_Slimes",
+    "file": "/home/jacob/src/dev/C/Spellworks_Slimes/src/stage.c",
+    "output": "/home/jacob/src/dev/C/Spellworks_Slimes/obj/native/stage.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Iinclude/",
+      "-ggdb",
+      "-o",
+      "obj/native/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/jacob/src/dev/C/Spellworks_Slimes",
+    "file": "/home/jacob/src/dev/C/Spellworks_Slimes/src/main.c",
+    "output": "/home/jacob/src/dev/C/Spellworks_Slimes/obj/native/main.o"
+  }
+]
