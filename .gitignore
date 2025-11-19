@@ -1,0 +1,16 @@
+.vscode/
+htmlTemplate/
+compile_commands.json
+.cache/
+./core
+core
+
+#c
+bin/
+obj/
+
+.sisyphus/
+sisyphus.legend
+
+CLAUDE.md
+GEMINI.md
