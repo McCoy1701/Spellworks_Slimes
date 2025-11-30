@@ -1,9 +1,8 @@
 .vscode/
-htmlTemplate/
 compile_commands.json
 .cache/
-./core
 core
+core.*
 
 #c
 bin/
