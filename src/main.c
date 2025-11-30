@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 #include <Archimedes.h>
 
 #include "stage.h"
@@ -33,9 +37,15 @@ int main( void )
 
   aInitGame();
 
-  while( app.running ) {
-    aMainloop();
-  }
+  #ifdef __EMSCRIPTEN__
+    emscripten_set_main_loop( aMainloop, 0, 1 );
+  #endif
+
+  #ifndef __EMSCRIPTEN__
+    while( app.running ) {
+      aMainloop();
+    }
+  #endif
   
   a_Quit();
 

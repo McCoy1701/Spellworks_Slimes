@@ -11,6 +11,8 @@ SRC_DIR   = src
 OBJ_DIR   = obj
 INC_DIR   = include
 BIN_DIR   = bin
+LIB_DIR   = lib
+INDEX_DIR = index
 
 # Object Directories (Separated for different build types)
 OBJ_DIR_NATIVE = obj/native
@@ -19,10 +21,11 @@ OBJ_DIR_EM     = obj/em
 #Flags
 CINC = -I$(INC_DIR)/
 LDLIBS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
-EFLAGS = -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_MIXER=2 -s USE_SDL_TTF=2
+EFLAGS = -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_MIXER=2 -s USE_SDL_TTF=2 -sALLOW_MEMORY_GROWTH
 
 C_FLAGS = -Wall -Wextra $(CINC)
 NATIVE_C_FLAGS = $(C_FLAGS) -ggdb -lArchimedes
+EMSCRIP_C_FLAGS = $(C_FLAGS) $(EFLAGS)
 
 # ====================================================================
 # ARCHIMEDES LIBRARY OBJECTS (Core C Files)
@@ -31,57 +34,40 @@ NATIVE_C_FLAGS = $(C_FLAGS) -ggdb -lArchimedes
 SPELLWORKS_SRCS = stage.c
 
 NATIVE_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_NATIVE)/%.o, $(SPELLWORKS_SRCS))
+EMCC_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_EM)/%.o, $(SPELLWORKS_SRCS))
 
 MAIN_OBJ = $(OBJ_DIR_NATIVE)/main.o
+EM_MAIN_OBJ = $(OBJ_DIR_EM)/main.o
 
 NATIVE_EXE_OBJS = $(NATIVE_LIB_OBJS) $(MAIN_OBJ)
+EMCC_EXE_OBJS = $(EMCC_LIB_OBJS) $(EM_MAIN_OBJ)
 
 # ====================================================================
 # PHONY TARGETS
 # ====================================================================
 
-.PHONY: all shared editor EM EMARCH test clean install uninstall ainstall auninstall updateHeader bear bearclean
+.PHONY: all EM clean bear bearclean
 all: $(BIN_DIR)/native
 
 # Emscripten Targets
-EM: $(INDEX_DIR)/index.html
-EMARCH: $(BIN_DIR)/libArchimedes.a
+EM: $(INDEX_DIR)/index
 
 # ====================================================================
 # DIRECTORY & UTILITY RULES
 # ====================================================================
 
 # Ensure the directories exist before attempting to write files to them
-$(BIN_DIR) $(OBJ_DIR_NATIVE) $(OBJ_DIR_SHARED) $(OBJ_DIR_EDITOR):
+$(BIN_DIR) $(OBJ_DIR_NATIVE) $(OBJ_DIR_EM) $(OBJ_DIR_EDITOR) $(INDEX_DIR):
 	mkdir -p $@
 
 clean:
-	rm -rf $(OBJ_DIR) $(OBJ_DIR_NATIVE) $(OBJ_DIR_SHARED) $(BIN_DIR)
+	rm -rf $(OBJ_DIR) $(OBJ_DIR_NATIVE) $(OBJ_DIR_EM) $(BIN_DIR) $(INDEX_DIR)
 	@clear
 
 bear:
 	bear -- make
 bearclean:
 	rm compile_commands.json
-
-install: $(BIN_DIR)/libArchimedes.so
-	sudo cp $< /usr/lib/
-	sudo cp $(INC_DIR)/Archimedes.h /usr/include/
-
-uninstall:
-	sudo rm /usr/lib/libArchimedes.so
-	sudo rm /usr/include/Archimedes.h
-
-ainstall: $(BIN_DIR)/libArchimedes.a
-	sudo cp $< /usr/lib/
-	sudo cp $(INC_DIR)/Archimedes.h /usr/include/
-
-auninstall:
-	sudo rm /usr/lib/libArchimedes.a
-	sudo rm /usr/include/Archimedes.h
-
-updateHeader:
-	sudo cp $(INC_DIR)/Archimedes.h /usr/include/Archimedes.h
 
 # ====================================================================
 # COMPILATION RULES
@@ -98,15 +84,11 @@ $(OBJ_DIR_NATIVE)/main.o: $(SRC_DIR)/main.c | $(OBJ_DIR_NATIVE)
 # COMPILATION RULES (Emscripten - ECC)
 # ====================================================================
 
-.PHONY: EM
-EM: always $(INDEX_DIR)/index
+$(OBJ_DIR_EM)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR_EM)
+	$(ECC) -c $< -o $@ $(EMSCRIP_C_FLAGS)
 
-$(OBJ_DIR)/em_main.o: $(TEM_DIR)/main.c
-	$(ECC) -c $< $(CINC) $(EFLAGS) -o $@
-
-$(INDEX_DIR)/index: $(OBJ_DIR)/em_main.o $(BIN_DIR)/libArchimedes.a
-	mkdir -p $(INDEX_DIR)
-	$(ECC) $^ -s WASM=1 $(EFLAGS) --shell-file htmlTemplate/template.html --preload-file resources/ -o $@.html
+$(OBJ_DIR_EM)/main.o: $(SRC_DIR)/main.c | $(OBJ_DIR_EM)
+	$(ECC) -c $< -o $@ $(EMSCRIP_C_FLAGS)
 
 # ====================================================================
 # LINKING RULES
@@ -115,4 +97,7 @@ $(INDEX_DIR)/index: $(OBJ_DIR)/em_main.o $(BIN_DIR)/libArchimedes.a
 # Target: Native Executable
 $(BIN_DIR)/native: $(NATIVE_EXE_OBJS) | $(BIN_DIR)
 	$(CC) $^ -o $@ $(NATIVE_C_FLAGS) $(LDLIBS)
+
+$(INDEX_DIR)/index: $(EMCC_EXE_OBJS) $(LIB_DIR)/libArchimedes.a | $(INDEX_DIR)
+	$(ECC) $^ -s WASM=1 $(EFLAGS) --shell-file htmlTemplate/template.html --preload-file resources/ -o $@.html
 
