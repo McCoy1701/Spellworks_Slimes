@@ -9,6 +9,7 @@ void aInitGame( void )
 {
   app.delegate.logic = e_Logic;
   app.delegate.draw  = e_Draw;
+  a_InitWidgets( "resources/widgets/inventory.auf" );
   
 }
 
@@ -20,6 +21,13 @@ static void e_Logic( float dt )
   {
     app.keyboard[SDL_SCANCODE_ESCAPE] = 0;
     app.running = 0;
+  }
+
+  if ( app.keyboard[A_R] == 1 )
+  {
+    app.keyboard[A_R] = 0;
+    //a_InitWidgets( "resources/widgets/inventory.auf" );
+
   }
 
   a_DoWidget();
