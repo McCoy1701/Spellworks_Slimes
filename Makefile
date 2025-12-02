@@ -66,6 +66,7 @@ clean:
 
 bear:
 	bear -- make
+
 bearclean:
 	rm compile_commands.json
 

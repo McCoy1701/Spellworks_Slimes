@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 #include <Archimedes.h>
 
 static void e_Logic( float );
@@ -9,7 +8,7 @@ void aInitGame( void )
 {
   app.delegate.logic = e_Logic;
   app.delegate.draw  = e_Draw;
-  a_InitWidgets( "resources/widgets/inventory.auf" );
+  a_WidgetsInit( "resources/widgets/inventory.auf" );
   
 }
 
@@ -26,7 +25,14 @@ static void e_Logic( float dt )
   if ( app.keyboard[A_R] == 1 )
   {
     app.keyboard[A_R] = 0;
-    //a_InitWidgets( "resources/widgets/inventory.auf" );
+    a_WidgetsInit( "resources/widgets/inventory.auf" );
+
+  }
+  
+  if ( app.keyboard[A_T] == 1 )
+  {
+    app.keyboard[A_T] = 0;
+    a_WidgetsInit( "resources/widgets/test.auf" );
 
   }
 
