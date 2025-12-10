@@ -1,25 +1,28 @@
 #include <stdio.h>
 #include <Archimedes.h>
 
-static void e_Logic( float );
-static void e_Draw( float );
+#include "main_menu.h"
 
-void aInitGame( void )
+static void s0_Logic( float );
+static void s0_Draw( float );
+
+void Stage0Init( void )
 {
-  app.delegate.logic = e_Logic;
-  app.delegate.draw  = e_Draw;
-  a_WidgetsInit( "resources/widgets/inventory.auf" );
+  app.delegate.logic = s0_Logic;
+  app.delegate.draw  = s0_Draw;
   
+  a_WidgetsInit( "resources/widgets/inventory.auf" );
+  app.active_widget = a_GetWidget( "inv_screen" );
 }
 
-static void e_Logic( float dt )
+static void s0_Logic( float dt )
 {
   a_DoInput();
   
   if ( app.keyboard[ SDL_SCANCODE_ESCAPE ] == 1 )
   {
     app.keyboard[SDL_SCANCODE_ESCAPE] = 0;
-    app.running = 0;
+    MainMenuInit();
   }
 
   if ( app.keyboard[A_R] == 1 )
@@ -39,7 +42,7 @@ static void e_Logic( float dt )
   a_DoWidget();
 }
 
-static void e_Draw( float dt )
+static void s0_Draw( float dt )
 {
   aColor_t color_something = { .r = 0, .g = 0, .b = 255, .a = 255 };
   aRectf_t rect_something = { .x = 100, .y = 100, .w = 32, .h = 32 };

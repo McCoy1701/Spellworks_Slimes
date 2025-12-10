@@ -5,8 +5,7 @@
 #endif
 
 #include <Archimedes.h>
-
-#include "stage.h"
+#include "main_menu.h"
 
 void aMainloop( void )
 {
@@ -35,7 +34,7 @@ int main( void )
 {
   a_Init( SCREEN_WIDTH, SCREEN_HEIGHT, "Archimedes" );
 
-  aInitGame();
+  MainMenuInit();
 
   #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop( aMainloop, 0, 1 );

@@ -1,7 +1,7 @@
 #ifndef __STAGE_H__
 #define __STAGE_H__
 
-void aInitGame( void );
+void Stage0Init( void );
 
 #endif
 

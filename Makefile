@@ -31,7 +31,8 @@ EMSCRIP_C_FLAGS = $(C_FLAGS) $(EFLAGS)
 # ARCHIMEDES LIBRARY OBJECTS (Core C Files)
 # ====================================================================
 
-SPELLWORKS_SRCS = stage.c
+SPELLWORKS_SRCS = stage_0.c \
+									main_menu.c
 
 NATIVE_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_NATIVE)/%.o, $(SPELLWORKS_SRCS))
 EMCC_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_EM)/%.o, $(SPELLWORKS_SRCS))
