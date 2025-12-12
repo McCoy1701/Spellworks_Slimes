@@ -21,7 +21,7 @@ typedef struct
 
 typedef struct
 {
-  Map_Tile_t map[MAP_SIZE];
+  Map_Tile_t map[MAP_SIZE * MAP_SIZE];
   int cursor_x, cursor_y;
 } World_t;
 

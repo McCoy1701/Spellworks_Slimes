@@ -10,17 +10,17 @@ static int iso_object_count;
 static ISO_Object_t iso_objects[MAX_ISO_OBJECTS];
 static double iso_draw_timer;
 
-void ISO_Render_Init( void )
+void ISO_Init( void )
 {
   iso_draw_timer = 0;
 }
 
-void ISO_Object_Logic( float dt )
+void ISO_Logic( float dt )
 {
   iso_draw_timer = MIN( iso_draw_timer + ISO_RENDER_SPEED * dt, iso_object_count );
 }
 
-void ISO_Draw_Objects( void )
+void ISO_Draw( void )
 {
   ISO_Object_t* o;
 
@@ -48,7 +48,7 @@ void ISO_Convert( int x, int z, int* sx, int* sy )
   *sy = MAP_RENDER_Y_OFFSET + ( ( z * CELL_HEIGHT / 2 ) - ( x * CELL_HEIGHT / 2 ) );
 }
 
-void ISO_Add_Object( int x, int z, int sx, int sy, aImage_t* img )
+void ISO_AddObject( int x, int z, int sx, int sy, aImage_t* img )
 {
   ISO_Object_t* o;
   if ( iso_object_count < MAX_ISO_OBJECTS )

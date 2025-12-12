@@ -1,0 +1,8 @@
+#ifndef __MAP_H__
+#define __MAP_H__
+
+void Map_Init( void );
+void Map_Draw( void );
+
+#endif
+

@@ -34,6 +34,7 @@ EMSCRIP_C_FLAGS = $(C_FLAGS) $(EFLAGS)
 SPELLWORKS_SRCS = image.c \
 									iso.c \
 									main_menu.c \
+									map.c \
 									stage_0.c \
 
 
