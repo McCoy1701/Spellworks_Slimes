@@ -14,12 +14,32 @@
 
 #define MAX_TILES 1024
 #define MAX_ISO_OBJECTS 1024
-#define ISO_RENDER_SPEED 15
+#define ISO_RENDER_SPEED 250
 
 #define INDEX_3( x, y, z, width, height ) ( ( z * ( width * height ) )\
     + ( y * height ) + x )
 
 #define INDEX_2( x, y, height ) ( ( x * height ) + y )
+
+enum
+{
+  LAYER_BACKGROUND = 0,
+  LAYER_MID = 8,
+  LAYER_FOREGROUND = 15,
+  LAYER_MAX
+};
+
+enum
+{
+  FACING_NORTH,
+  FACING_NORTH_EAST,
+  FACING_EAST,
+  FACING_SOUTH_EAST,
+  FACING_SOUTH,
+  FACING_SOTUH_WEST,
+  FACING_WEST,
+  FACING_NORTH_WEST
+};
 
 #endif
 

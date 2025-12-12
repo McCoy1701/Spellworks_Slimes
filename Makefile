@@ -24,7 +24,7 @@ LDLIBS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lm
 EFLAGS = -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_SDL_MIXER=2 -s USE_SDL_TTF=2 -sALLOW_MEMORY_GROWTH
 
 C_FLAGS = -Wall -Wextra $(CINC)
-NATIVE_C_FLAGS = $(C_FLAGS) -ggdb -lArchimedes
+NATIVE_C_FLAGS = $(C_FLAGS) -ggdb -lArchimedes -lDaedalus
 EMSCRIP_C_FLAGS = $(C_FLAGS) $(EFLAGS)
 
 # ====================================================================
@@ -35,6 +35,7 @@ SPELLWORKS_SRCS = image.c \
 									iso.c \
 									main_menu.c \
 									map.c \
+									player.c \
 									stage_0.c \
 
 

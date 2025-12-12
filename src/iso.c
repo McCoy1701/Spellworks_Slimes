@@ -18,6 +18,7 @@ void ISO_Init( void )
 void ISO_Logic( float dt )
 {
   iso_draw_timer = MIN( iso_draw_timer + ISO_RENDER_SPEED * dt, iso_object_count );
+  //iso_draw_timer = iso_object_count;
 }
 
 void ISO_Draw( void )
