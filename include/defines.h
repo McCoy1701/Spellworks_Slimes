@@ -13,5 +13,10 @@
 #define MAX_ISO_OBJECTS 1024
 #define ISO_RENDER_SPEED 15
 
+#define INDEX_3( x, y, z, width, height ) ( ( z * ( width * height ) )\
+    + ( y * height ) + x )
+
+#define INDEX_2( x, y, height ) ( ( x * height ) + y )
+
 #endif
 
