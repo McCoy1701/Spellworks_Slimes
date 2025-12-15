@@ -17,7 +17,7 @@ typedef struct _entity
   unsigned long flags;
   unsigned long iso_flags;
   aImage_t* img;
-  dVec2_t facing;
+  int facing;
   void ( *touch )( struct _entity* self, struct _entity* other );
   struct _entity* next;
 }Entity_t;
