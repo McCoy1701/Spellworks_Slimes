@@ -47,5 +47,12 @@ typedef struct
   int cursor_x, cursor_y;
 } World_t;
 
+typedef struct _Entity_Init_Func
+{
+  char name[MAX_NAME_LENGTH];
+  void (*init)(Entity_t* e);
+  struct _Entity_Init_Func* next;
+} Entity_Init_Func_t;
+
 #endif
 

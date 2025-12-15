@@ -41,12 +41,12 @@ void Map_Draw( void )
       {
         if ( i == world.cursor_x && j == world.cursor_y )
         {
-          ISO_AddObject( i, j, 0, 0, selected_tile );
+          ISO_AddObject( i, j, 0, 0, selected_tile, LAYER_BACKGROUND );
         }
 
         else
         {
-          ISO_AddObject( i, j, 0, 0, tiles[n] );
+          ISO_AddObject( i, j, 0, 0, tiles[n], LAYER_BACKGROUND );
         }
       }
     }
@@ -54,3 +54,21 @@ void Map_Draw( void )
 
 }
 
+int IsGround( int x, int z )
+{
+  int index = INDEX_2( x, z, MAP_SIZE );
+  return ( x >= 0 &&
+           z >= 0 &&
+           x < MAP_SIZE &&
+           z < MAP_SIZE &&
+           world.map[index].tile >= TILE_GROUND && 
+           world.map[index].tile < TILE_WALL );
+}
+
+int CheckPlayersBounds( void )
+{
+  return ( world.player->x >= 0 &&
+           world.player->z >= 0 && 
+           world.player->x <= MAP_SIZE &&
+           world.player->z <= MAP_SIZE );
+}

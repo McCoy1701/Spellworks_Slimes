@@ -49,7 +49,7 @@ void ISO_Convert( int x, int z, int* sx, int* sy )
   *sy = MAP_RENDER_Y_OFFSET + ( ( z * CELL_HEIGHT / 2 ) - ( x * CELL_HEIGHT / 2 ) );
 }
 
-void ISO_AddObject( int x, int z, int sx, int sy, aImage_t* img )
+void ISO_AddObject( int x, int z, int sx, int sy, aImage_t* img, int layer )
 {
   ISO_Object_t* o;
   if ( iso_object_count < MAX_ISO_OBJECTS )
@@ -59,6 +59,7 @@ void ISO_AddObject( int x, int z, int sx, int sy, aImage_t* img )
 
     o->sx = o->x + sx;
     o->sy = o->y + sy;
+    o->layer = layer;
     o->img = img;
   }
 }

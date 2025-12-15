@@ -2,10 +2,13 @@
 #include <Archimedes.h>
 
 #include "defines.h"
+#include "entity.h"
+#include "entity_factory.h"
 #include "image.h"
 #include "iso.h"
 #include "main_menu.h"
 #include "map.h"
+#include "player.h"
 #include "structs.h"
 
 static void Do_Cursor( void );
@@ -23,6 +26,10 @@ void Stage0Init( void )
   Map_Init();
 
   ISO_Init();
+  
+  EntityFactoryInit();
+
+  EntitiesInit();
 
   a_WidgetsInit( "resources/widgets/inventory.auf" );
   app.active_widget = a_GetWidget( "inv_screen" );
@@ -51,17 +58,19 @@ static void s0_Logic( float dt )
     a_WidgetsInit( "resources/widgets/test.auf" );
 
   }
-
-  a_DoWidget();
   
   ISO_Logic( dt );
   Do_Cursor();
+  PlayerLogic( dt );
+
+  a_DoWidget();
 }
 
 static void s0_Draw( float dt )
 {
   ISO_Clear();
   Map_Draw();
+  EntitiesDraw();
   ISO_Draw();
 
   aColor_t color_something = { .r = 0, .g = 0, .b = 255, .a = 255 };

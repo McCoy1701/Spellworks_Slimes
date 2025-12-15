@@ -31,7 +31,10 @@ EMSCRIP_C_FLAGS = $(C_FLAGS) $(EFLAGS)
 # ARCHIMEDES LIBRARY OBJECTS (Core C Files)
 # ====================================================================
 
-SPELLWORKS_SRCS = image.c \
+SPELLWORKS_SRCS = player_entity.c \
+									entity.c \
+									entity_factory.c \
+									image.c \
 									iso.c \
 									main_menu.c \
 									map.c \

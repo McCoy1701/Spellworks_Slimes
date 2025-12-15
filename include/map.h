@@ -4,5 +4,8 @@
 void Map_Init( void );
 void Map_Draw( void );
 
+int IsGround( int x, int z );
+int CheckPlayersBounds( void );
+
 #endif
 

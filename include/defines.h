@@ -41,5 +41,13 @@ enum
   FACING_NORTH_WEST
 };
 
+enum
+{
+  TILE_GROUND = 0, //128 different ground tiles
+  TILE_WALL = 128, //128 wall tiles
+  TILE_WATER = 160, //32 water tiles
+  TILE_MAX = 256  //
+};
+
 #endif
 
