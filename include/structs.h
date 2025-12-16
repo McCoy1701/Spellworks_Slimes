@@ -9,8 +9,9 @@
 typedef struct _entity
 {
   char name[MAX_NAME_LENGTH];
-  int x;
-  int z;
+  float x;
+  float z;
+  float speed;
   int base;
   int layer;
   int dead;
@@ -24,10 +25,10 @@ typedef struct _entity
 
 typedef struct
 {
-  int x;  //world space
-  int y;
-  int sx;  //screen space
-  int sy;
+  float x;  //world space
+  float y;
+  float sx;  //screen space
+  float sy;
   int layer;
   aImage_t* img;
   aColor_t color;

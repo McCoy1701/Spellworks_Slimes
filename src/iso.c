@@ -43,13 +43,13 @@ void ISO_Clear( void )
   iso_object_count = 0;
 }
 
-void ISO_Convert( int x, int z, int* sx, int* sy )
+void ISO_Convert( float x, float z, float* sx, float* sy )
 {
   *sx = MAP_RENDER_X_OFFSET + ( ( x * CELL_WIDTH / 2 ) + ( z * CELL_WIDTH / 2 ) );
   *sy = MAP_RENDER_Y_OFFSET + ( ( z * CELL_HEIGHT / 2 ) - ( x * CELL_HEIGHT / 2 ) );
 }
 
-void ISO_AddObject( int x, int z, int sx, int sy, aImage_t* img, int layer )
+void ISO_AddObject( float x, float z, float sx, float sy, aImage_t* img, int layer )
 {
   ISO_Object_t* o;
   if ( iso_object_count < MAX_ISO_OBJECTS )

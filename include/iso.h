@@ -8,8 +8,8 @@ void ISO_Logic( float dt );
 void ISO_Draw( void );
 void ISO_Clear( void );
 
-void ISO_Convert( int x, int z, int* sx, int* sy );
-void ISO_AddObject( int x, int z, int sx, int sy, aImage_t* img, int layer );
+void ISO_Convert( float x, float z, float* sx, float* sy );
+void ISO_AddObject( float x, float z, float sx, float sy, aImage_t* img, int layer );
 
 #endif
 
