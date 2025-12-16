@@ -31,6 +31,8 @@ void Stage0Init( void )
 
   EntitiesInit();
 
+  PlayerInit();
+
   a_WidgetsInit( "resources/widgets/inventory.auf" );
   app.active_widget = a_GetWidget( "inv_screen" );
 }

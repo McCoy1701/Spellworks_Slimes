@@ -12,13 +12,37 @@ extern World_t world;
 void PlayerInit( void )
 {
   //Load animations
+  world.player->running[FACING_NORTH] = a_AnimationCreate( 
+    "resources/assets/character/player_up.png",
+    24, 34, 9, 200 );
+  world.player->running[FACING_NORTH_EAST] = a_AnimationCreate( 
+    "resources/assets/character/player_NE.png",
+    24, 34, 9, 200 );
+  world.player->running[FACING_EAST] = a_AnimationCreate( 
+    "resources/assets/character/player_right.png",
+    24, 34, 9, 200 );
+  world.player->running[FACING_SOUTH_EAST] = a_AnimationCreate( 
+    "resources/assets/character/player_SE.png",
+    24, 34, 9, 200 );
+  world.player->running[FACING_SOUTH] = a_AnimationCreate( 
+    "resources/assets/character/player_down.png",
+    24, 34, 9, 200 );
+  world.player->running[FACING_SOUTH_WEST] = a_AnimationCreate( 
+    "resources/assets/character/player_SW.png",
+    24, 34, 9, 200 );
+  world.player->running[FACING_WEST] = a_AnimationCreate( 
+    "resources/assets/character/player_left.png",
+    24, 34, 9, 200 );
+  world.player->running[FACING_NORTH_WEST] = a_AnimationCreate( 
+    "resources/assets/character/player_NW.png",
+    24, 34, 9, 200 );
 }
 
 void PlayerLogic( float dt )
 {
   world.player->facing = PlayerDirection();
   PlayerMovements( world.player->facing, dt );
-
+  
 }
 
 static void PlayerMovements( int key_value, float dt )

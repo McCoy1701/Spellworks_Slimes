@@ -17,6 +17,8 @@ typedef struct _entity
   int dead;
   unsigned long flags;
   unsigned long iso_flags;
+  aAnimation_t* running[FACING_MAX];
+  aAnimation_t* idle;
   aImage_t* img;
   int facing;
   void ( *touch )( struct _entity* self, struct _entity* other );
