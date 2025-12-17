@@ -9,7 +9,10 @@ void ISO_Draw( void );
 void ISO_Clear( void );
 
 void ISO_Convert( float x, float z, float* sx, float* sy );
-void ISO_AddObject( float x, float z, float sx, float sy, aImage_t* img, int layer );
+void ISO_AddAnimatedObject( float x, float z, float sx, float sy,
+                            aAnimation_t* anim, int layer );
+void ISO_AddStaticObject( float x, float z, float sx, float sy,
+                          aImage_t* img, int layer );
 
 #endif
 

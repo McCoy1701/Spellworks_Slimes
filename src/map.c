@@ -41,12 +41,12 @@ void Map_Draw( void )
       {
         if ( i == world.cursor_x && j == world.cursor_y )
         {
-          ISO_AddObject( i, j, 0, 0, selected_tile, LAYER_BACKGROUND );
+          ISO_AddStaticObject( i, j, 0, 0, selected_tile, LAYER_BACKGROUND );
         }
 
         else
         {
-          ISO_AddObject( i, j, 0, 0, tiles[n], LAYER_BACKGROUND );
+          ISO_AddStaticObject( i, j, 0, 0, tiles[n], LAYER_BACKGROUND );
         }
       }
     }

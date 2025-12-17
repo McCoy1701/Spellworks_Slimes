@@ -32,7 +32,16 @@ void ISO_Draw( void )
     if ( iso_draw_timer >= i )
     {
       o = &iso_objects[i];
-      a_Blit( o->img, o->sx, o->sy );
+      if ( o->animated )
+      {
+        aPoint2f_t pos = (aPoint2f_t){ .x = o->sx, .y = o->sy };
+        a_AnimationPlay( pos, o->anim );
+      }
+      
+      else
+      {
+        a_Blit( o->img, o->sx, o->sy );
+      }
     }
   }
 }
@@ -49,7 +58,23 @@ void ISO_Convert( float x, float z, float* sx, float* sy )
   *sy = MAP_RENDER_Y_OFFSET + ( ( z * CELL_HEIGHT / 2 ) - ( x * CELL_HEIGHT / 2 ) );
 }
 
-void ISO_AddObject( float x, float z, float sx, float sy, aImage_t* img, int layer )
+void ISO_AddAnimatedObject( float x, float z, float sx, float sy, aAnimation_t* anim, int layer )
+{
+  ISO_Object_t* o;
+  if ( iso_object_count < MAX_ISO_OBJECTS )
+  {
+    o = &iso_objects[iso_object_count++];
+    ISO_Convert( x, z, &o->x, &o->y );
+
+    o->sx = o->x + sx;
+    o->sy = o->y + sy;
+    o->layer = layer;
+    o->anim = anim;
+    o->animated = 1;
+  }
+}
+
+void ISO_AddStaticObject( float x, float z, float sx, float sy, aImage_t* img, int layer )
 {
   ISO_Object_t* o;
   if ( iso_object_count < MAX_ISO_OBJECTS )

@@ -53,5 +53,20 @@ enum
   TILE_MAX = 256  //
 };
 
+enum
+{
+  STATIC_OBJECT = 0,
+  ANIMATED_OBJECT,
+};
+
+enum
+{
+  STATE_IDLE = 0,
+  STATE_RUN,
+  STATE_ATTACK,
+  STATE_CONFUSED,
+  STATE_MAX,
+};
+
 #endif
 

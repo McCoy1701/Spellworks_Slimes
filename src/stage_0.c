@@ -94,7 +94,7 @@ static void s0_Draw( float dt )
 
   a_DrawText( fps_text, 600, 100, fps_style );
 
-  a_DrawWidgets();
+  //a_DrawWidgets();
 }
 
 static void Do_Cursor( void )

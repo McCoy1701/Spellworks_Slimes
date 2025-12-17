@@ -5,6 +5,7 @@
 #include "iso.h"
 #include "map.h"
 #include "structs.h"
+#include "utils.h"
 
 extern World_t world;
 
@@ -26,14 +27,16 @@ void EntitiesDraw( void )
 
   for ( e = world.entity_head.next; e != NULL; e = e->next )
   {
-    sx = CELL_WIDTH / 2;
-    sx -= e->img->rect.w / 2;
+    CalculateScreenPos( e, &sx, &sy );
+    if ( e ==  world.player )
+    {
+      ISO_AddAnimatedObject(e->x, e->z, sx, sy, e->running[e->facing], LAYER_MID );
+    }
     
-    sy = CELL_HEIGHT /2;
-    sy -= e->img->rect.h;
-    sy -= e->base;
-
-    ISO_AddObject( e->x, e->z, sx, sy, e->img, LAYER_MID );
+    else
+    {
+      ISO_AddStaticObject( e->x, e->z, sx, sy, e->img, LAYER_MID );
+    }
   }
 }
 

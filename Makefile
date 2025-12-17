@@ -40,6 +40,7 @@ SPELLWORKS_SRCS = player_entity.c \
 									map.c \
 									player.c \
 									stage_0.c \
+									utils.c \
 
 
 NATIVE_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_NATIVE)/%.o, $(SPELLWORKS_SRCS))

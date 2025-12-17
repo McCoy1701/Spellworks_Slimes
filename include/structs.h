@@ -15,6 +15,7 @@ typedef struct _entity
   int base;
   int layer;
   int dead;
+  int state;
   unsigned long flags;
   unsigned long iso_flags;
   aAnimation_t* running[FACING_MAX];
@@ -32,7 +33,9 @@ typedef struct
   float sx;  //screen space
   float sy;
   int layer;
+  int animated;
   aImage_t* img;
+  aAnimation_t* anim;
   aColor_t color;
 } ISO_Object_t;
 
