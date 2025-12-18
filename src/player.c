@@ -9,43 +9,13 @@
 static int PlayerDirection( void );
 static void PlayerMovements( int key_value, float dt );
 
+static void LoadRunningAnimations( void );
+
 extern World_t world;
 
 void PlayerInit( void )
 {
-  int w = 24;
-  int h = 34;
-  int frame_count = 9;
-  uint32_t frame_duration = 50;
-
-  //Load animations
-  world.player->running[FACING_NONE] = a_AnimationCreate( 
-    "resources/assets/character/player_SW.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_NORTH] = a_AnimationCreate( 
-    "resources/assets/character/player_up.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_NORTH_EAST] = a_AnimationCreate( 
-    "resources/assets/character/player_NE.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_EAST] = a_AnimationCreate( 
-    "resources/assets/character/player_right.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_SOUTH_EAST] = a_AnimationCreate( 
-    "resources/assets/character/player_SE.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_SOUTH] = a_AnimationCreate( 
-    "resources/assets/character/player_down.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_SOUTH_WEST] = a_AnimationCreate( 
-    "resources/assets/character/player_SW.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_WEST] = a_AnimationCreate( 
-    "resources/assets/character/player_left.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_NORTH_WEST] = a_AnimationCreate( 
-    "resources/assets/character/player_NW.png",
-    w, h, frame_count, frame_duration );
+  LoadRunningAnimations();
 }
 
 void PlayerLogic( float dt )
@@ -56,6 +26,8 @@ void PlayerLogic( float dt )
 
 static void PlayerMovements( int key_value, float dt )
 {
+  if ( world.player->state == STATE_IDLE ) return;
+
   int dx = 0;
   int dz = 0;
 
@@ -86,6 +58,7 @@ static int PlayerDirection( void )
   int left  = app.keyboard[A_A] || app.keyboard[A_LEFT];
 
   uint8_t direction_bitmask = ( up << 0 | down << 1 | right << 2 | left << 3 );
+  world.player->state = STATE_RUN;
 
   switch ( direction_bitmask )
   {
@@ -100,6 +73,44 @@ static int PlayerDirection( void )
     case 0b0110: return FACING_SOUTH_EAST;
   }
 
-  return FACING_NONE;
+  world.player->state = STATE_IDLE;
+  return world.player->facing;
+}
+
+static void LoadRunningAnimations( void )
+{ 
+  int w = 24;
+  int h = 34;
+  int frame_count = 9;
+  uint32_t frame_duration = 50;
+
+  //Load animations
+  world.player->running[FACING_NONE] = a_AnimationCreate( 
+    "resources/assets/character/player_SW.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_NORTH_WEST] = a_AnimationCreate( 
+    "resources/assets/character/player_up.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_NORTH] = a_AnimationCreate( 
+    "resources/assets/character/player_NE.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_NORTH_EAST] = a_AnimationCreate( 
+    "resources/assets/character/player_right.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_EAST] = a_AnimationCreate( 
+    "resources/assets/character/player_SE.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_SOUTH_EAST] = a_AnimationCreate( 
+    "resources/assets/character/player_down.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_SOUTH] = a_AnimationCreate( 
+    "resources/assets/character/player_SW.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_SOUTH_WEST] = a_AnimationCreate( 
+    "resources/assets/character/player_left.png",
+    w, h, frame_count, frame_duration );
+  world.player->running[FACING_WEST] = a_AnimationCreate( 
+    "resources/assets/character/player_NW.png",
+    w, h, frame_count, frame_duration );
 }
 
