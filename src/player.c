@@ -16,12 +16,13 @@ void PlayerInit( void )
   int h = 34;
   int frame_count = 7;
   uint32_t frame_duration = 50;
+  uint32_t idle_frame_duration = 100;
   
   LoadAnimation( w, h, frame_count, frame_duration,
                  "resources/assets/character/player_run_",
                  world.player->running );
   
-  LoadAnimation( w, h, frame_count, frame_duration,
+  LoadAnimation( w, h, frame_count, idle_frame_duration,
                  "resources/assets/character/player_idle_",
                  world.player->idle );
 }
