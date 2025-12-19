@@ -1,21 +1,32 @@
 #include <Archimedes.h>
+#include <string.h>
 
 #include "defines.h"
-#include "iso.h"
-#include "map.h"
 #include "structs.h"
-#include "utils.h"
 
 static int PlayerDirection( void );
 static void PlayerMovements( int key_value, float dt );
 
-static void LoadRunningAnimations( void );
+static void LoadAnimation( int w, int h, int frame_count,
+                            uint32_t frame_duration,
+                            char* filename, aAnimation_t** anim );
 
 extern World_t world;
 
 void PlayerInit( void )
 {
-  LoadRunningAnimations();
+  int w = 24;
+  int h = 34;
+  int frame_count = 7;
+  uint32_t frame_duration = 50;
+  
+  LoadAnimation( w, h, frame_count, frame_duration,
+                 "resources/assets/character/player_run_",
+                 world.player->running );
+  
+  LoadAnimation( w, h, frame_count, frame_duration,
+                 "resources/assets/character/player_idle_",
+                 world.player->idle );
 }
 
 void PlayerLogic( float dt )
@@ -77,40 +88,27 @@ static int PlayerDirection( void )
   return world.player->facing;
 }
 
-static void LoadRunningAnimations( void )
-{ 
-  int w = 24;
-  int h = 34;
-  int frame_count = 9;
-  uint32_t frame_duration = 50;
-
+static void LoadAnimation( int w, int h, int frame_count,
+                            uint32_t frame_duration,
+                            char* filename, aAnimation_t** anim )
+{
+  
   //Load animations
-  world.player->running[FACING_NONE] = a_AnimationCreate( 
-    "resources/assets/character/player_SW.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_NORTH_WEST] = a_AnimationCreate( 
-    "resources/assets/character/player_up.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_NORTH] = a_AnimationCreate( 
-    "resources/assets/character/player_NE.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_NORTH_EAST] = a_AnimationCreate( 
-    "resources/assets/character/player_right.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_EAST] = a_AnimationCreate( 
-    "resources/assets/character/player_SE.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_SOUTH_EAST] = a_AnimationCreate( 
-    "resources/assets/character/player_down.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_SOUTH] = a_AnimationCreate( 
-    "resources/assets/character/player_SW.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_SOUTH_WEST] = a_AnimationCreate( 
-    "resources/assets/character/player_left.png",
-    w, h, frame_count, frame_duration );
-  world.player->running[FACING_WEST] = a_AnimationCreate( 
-    "resources/assets/character/player_NW.png",
-    w, h, frame_count, frame_duration );
+  for ( int i = FACING_NONE; i < FACING_MAX; i++ )
+  {
+    char anim_name[MAX_FILENAME_LENGTH];
+    char id_name[6];
+    
+    snprintf( id_name, 6, "%d.png", i );
+    
+    strcat( anim_name, filename );
+    strcat( anim_name, id_name );
+    
+    anim[i] = a_AnimationCreate( anim_name, w, h,
+                                 frame_count, frame_duration );
+    
+    memset( anim_name, 0, MAX_FILENAME_LENGTH );
+  }
+
 }
 

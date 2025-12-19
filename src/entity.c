@@ -30,7 +30,15 @@ void EntitiesDraw( void )
     CalculateScreenPos( e, &sx, &sy );
     if ( e ==  world.player )
     {
-      ISO_AddAnimatedObject(e->x, e->z, sx, sy, e->running[e->facing], LAYER_MID );
+      if ( e->state == STATE_RUN )
+      {
+        ISO_AddAnimatedObject(e->x, e->z, sx, sy, e->running[e->facing], LAYER_MID );
+      }
+      
+      else if ( e->state == STATE_IDLE )
+      {
+        ISO_AddAnimatedObject(e->x, e->z, sx, sy, e->idle[e->facing], LAYER_MID );
+      }
     }
     
     else
