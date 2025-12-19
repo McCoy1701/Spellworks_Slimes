@@ -3,13 +3,10 @@
 
 #include "defines.h"
 #include "structs.h"
+#include "utils.h"
 
 static int PlayerDirection( void );
 static void PlayerMovements( int key_value, float dt );
-
-static void LoadAnimation( int w, int h, int frame_count,
-                            uint32_t frame_duration,
-                            char* filename, aAnimation_t** anim );
 
 extern World_t world;
 
@@ -86,29 +83,5 @@ static int PlayerDirection( void )
 
   world.player->state = STATE_IDLE;
   return world.player->facing;
-}
-
-static void LoadAnimation( int w, int h, int frame_count,
-                            uint32_t frame_duration,
-                            char* filename, aAnimation_t** anim )
-{
-  
-  //Load animations
-  for ( int i = FACING_NONE; i < FACING_MAX; i++ )
-  {
-    char anim_name[MAX_FILENAME_LENGTH];
-    char id_name[6];
-    
-    snprintf( id_name, 6, "%d.png", i );
-    
-    strcat( anim_name, filename );
-    strcat( anim_name, id_name );
-    
-    anim[i] = a_AnimationCreate( anim_name, w, h,
-                                 frame_count, frame_duration );
-    
-    memset( anim_name, 0, MAX_FILENAME_LENGTH );
-  }
-
 }
 
