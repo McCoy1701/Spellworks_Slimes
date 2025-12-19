@@ -7,15 +7,21 @@ CC = gcc
 ECC = emcc
 
 # Directories
-SRC_DIR   = src
-OBJ_DIR   = obj
-INC_DIR   = include
-BIN_DIR   = bin
-LIB_DIR   = lib
-INDEX_DIR = index
+SRC_DIR    = src
+OBJ_DIR    = obj
+INC_DIR    = include
+BIN_DIR    = bin
+LIB_DIR    = lib
+INDEX_DIR  = index
+STAGES_DIR = src/stages
+ENTITY_LOGIC_DIR = src/entity_logic
+ENTITY_DIR = src/entities
 
 # Object Directories (Separated for different build types)
 OBJ_DIR_NATIVE = obj/native
+OBJ_DIR_STAGES = obj/native/stages
+OBJ_DIR_ENTITY_LOGIC = obj/native/entity_logic
+OBJ_DIR_ENTITIES = obj/native/entities
 OBJ_DIR_EM     = obj/em
 
 #Flags
@@ -28,28 +34,38 @@ NATIVE_C_FLAGS = $(C_FLAGS) -ggdb -lArchimedes -lDaedalus
 EMSCRIP_C_FLAGS = $(C_FLAGS) $(EFLAGS)
 
 # ====================================================================
-# ARCHIMEDES LIBRARY OBJECTS (Core C Files)
+# SPELLWORKS SLIMES LIBRARY OBJECTS (Core C Files)
 # ====================================================================
 
-SPELLWORKS_SRCS = player_entity.c \
-									entity.c \
+ENTITIES_SRCS = player_entity.c \
+								bullet_entity.c \
+								base_enemy_entity.c \
+
+ENTITY_LOGIC_SRCS = player.c \
+										bullet.c \
+		    						base_enemy.c \
+
+
+STAGES_SRCS = stage_0.c \
+
+SPELLWORKS_SRCS = entity.c \
 									entity_factory.c \
 									image.c \
 									iso.c \
 									main_menu.c \
 									map.c \
-									player.c \
-									stage_0.c \
 									utils.c \
 
-
 NATIVE_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_NATIVE)/%.o, $(SPELLWORKS_SRCS))
+ENTITIES_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_ENTITIES)/%.o, $(ENTITIES_SRCS))
+ENTITY_LOGIC_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_ENTITY_LOGIC)/%.o, $(ENTITY_LOGIC_SRCS))
+STAGES_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_STAGES)/%.o, $(STAGES_SRCS))
 EMCC_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_EM)/%.o, $(SPELLWORKS_SRCS))
 
 MAIN_OBJ = $(OBJ_DIR_NATIVE)/main.o
 EM_MAIN_OBJ = $(OBJ_DIR_EM)/main.o
 
-NATIVE_EXE_OBJS = $(NATIVE_LIB_OBJS) $(MAIN_OBJ)
+NATIVE_EXE_OBJS = $(ENTITIES_LIB_OBJS) $(ENTITY_LOGIC_LIB_OBJS) $(STAGES_LIB_OBJS) $(NATIVE_LIB_OBJS) $(MAIN_OBJ)
 EMCC_EXE_OBJS = $(EMCC_LIB_OBJS) $(EM_MAIN_OBJ)
 
 # ====================================================================
@@ -67,7 +83,7 @@ EM: $(INDEX_DIR)/index
 # ====================================================================
 
 # Ensure the directories exist before attempting to write files to them
-$(BIN_DIR) $(OBJ_DIR_NATIVE) $(OBJ_DIR_EM) $(OBJ_DIR_EDITOR) $(INDEX_DIR):
+$(BIN_DIR) $(OBJ_DIR_NATIVE) $(OBJ_DIR_EM) $(OBJ_DIR_EDITOR) $(INDEX_DIR) $(OBJ_DIR_ENTITIES) $(OBJ_DIR_ENTITY_LOGIC) $(OBJ_DIR_STAGES):
 	mkdir -p $@
 
 clean:
@@ -83,6 +99,15 @@ bearclean:
 # ====================================================================
 # COMPILATION RULES
 # ====================================================================
+
+$(OBJ_DIR_ENTITY_LOGIC)/%.o: $(ENTITY_LOGIC_DIR)/%.c | $(OBJ_DIR_ENTITY_LOGIC)
+	$(CC) -c $< -o $@ $(NATIVE_C_FLAGS)
+
+$(OBJ_DIR_STAGES)/%.o: $(STAGES_DIR)/%.c | $(OBJ_DIR_STAGES)
+	$(CC) -c $< -o $@ $(NATIVE_C_FLAGS)
+
+$(OBJ_DIR_ENTITIES)/%.o: $(ENTITY_DIR)/%.c | $(OBJ_DIR_ENTITIES)
+	$(CC) -c $< -o $@ $(NATIVE_C_FLAGS)
 
 $(OBJ_DIR_NATIVE)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR_NATIVE)
 	$(CC) -c $< -o $@ $(NATIVE_C_FLAGS)

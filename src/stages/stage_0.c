@@ -3,12 +3,11 @@
 
 #include "defines.h"
 #include "entity.h"
+#include "entity_logic/player.h"
 #include "entity_factory.h"
-#include "image.h"
 #include "iso.h"
 #include "main_menu.h"
 #include "map.h"
-#include "player.h"
 #include "structs.h"
 
 static void Do_Cursor( void );

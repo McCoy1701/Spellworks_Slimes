@@ -4,6 +4,8 @@
 #include "structs.h"
 
 #include "entities/player_entity.h"
+#include "entities/bullet_entity.h"
+#include "entities/base_enemy_entity.h"
 
 extern World_t world;
 
@@ -19,6 +21,8 @@ void EntityFactoryInit( void )
   tail = &head;
 
   AddInitFunc( "player_entity", PlayerEntityInit );
+  AddInitFunc( "bullet_entity", BulletEntityInit );
+  AddInitFunc( "base_enemy_entity", BaseEnemyEntityInit );
 }
 
 Entity_t* EntityInit( const char* name )

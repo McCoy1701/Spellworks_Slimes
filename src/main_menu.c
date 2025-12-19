@@ -13,6 +13,8 @@ void MainMenuInit( void )
   app.delegate.logic = mm_Logic;
   app.delegate.draw  = mm_Draw;
   
+  app.options.scale_factor = 1;
+  
   a_WidgetsInit( "resources/widgets/main_menu.auf" );
   app.active_widget = a_GetWidget( "main_menu" );
 

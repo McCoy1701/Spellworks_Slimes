@@ -12,7 +12,6 @@ void PlayerEntityInit( Entity_t* e )
   e->speed = 2;
   e->facing = FACING_SOUTH;
   e->state = STATE_IDLE;
-  app.options.scale_factor = 1;
 
   world.player = e;
 }
