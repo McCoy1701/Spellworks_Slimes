@@ -1,4 +1,5 @@
 #include <Archimedes.h>
+#include <Daedalus.h>
 
 #include "defines.h"
 #include "structs.h"
@@ -36,14 +37,41 @@ Entity_t* EntityInit( const char* name )
   return e;
 }
 
+void EntityDestroy( Entity_t* e )
+{
+  if ( e == NULL ) return;
+  
+  d_ArrayRemove( world.entity_pool, e->id );
+
+  a_ImageFree( e->img );
+
+  if ( e->running[0] && e->idle[0] )
+  {
+    for ( int i = 0; i < FACING_MAX; i++ )
+    {
+      a_AnimationFree( e->running[i] );
+      a_AnimationFree( e->idle[i] );
+    }
+  }
+
+  free( e );
+}
+
 static Entity_t* SpawnEntity( void )
 {
-  Entity_t* e = malloc( sizeof( Entity_t ) );
-  memset( e, 0, sizeof( Entity_t ) );
-  world.entity_tail->next = e;
-  world.entity_tail = e;
+  if ( world.entity_count < MAX_ENTITIES )
+  {
+    Entity_t* e = malloc( sizeof( Entity_t ) );
+    memset( e, 0, sizeof( Entity_t ) );
 
-  return e;
+    d_ArrayAppend( world.entity_pool, e );
+    world.entity_count++;
+
+    return e;
+  }
+
+  LOG("TOO MANY ENTITIES!");
+  return NULL;
 }
 
 static Entity_Init_Func_t* GetInitFunc( const char* name )

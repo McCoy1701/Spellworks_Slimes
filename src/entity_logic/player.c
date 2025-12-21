@@ -1,7 +1,7 @@
 #include <Archimedes.h>
-#include <string.h>
 
 #include "defines.h"
+#include "entity_logic/bullet.h"
 #include "structs.h"
 #include "utils.h"
 
@@ -31,6 +31,15 @@ void PlayerLogic( float dt )
 {
   world.player->facing = PlayerDirection();
   PlayerMovements( world.player->facing, dt );
+  if ( app.mouse.button == 1 && app.mouse.state == 1 )
+  {
+    app.mouse.button = 0;
+    app.mouse.state = 0;
+
+    BulletInit();
+  }
+
+  BulletLogic( dt );
 }
 
 static void PlayerMovements( int key_value, float dt )

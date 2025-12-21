@@ -7,5 +7,7 @@
 void EntityFactoryInit( void );
 Entity_t* EntityInit( const char* name );
 
+void EntityDestroy( Entity_t* e );
+
 #endif
 

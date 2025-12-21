@@ -89,6 +89,19 @@ void ISO_AddStaticObject( float x, float z, float sx, float sy, aImage_t* img, i
   }
 }
 
+int ISO_CheckBounds( float x, float z )
+{
+  float min_x, min_y;
+  float max_x, max_y;
+  ISO_Convert( 0, 0, &min_x, &min_y );
+  ISO_Convert( MAP_SIZE, MAP_SIZE, &max_x, &max_y );
+
+  return ( x >= 0 &&
+           z >= 0 && 
+           x <= max_x &&
+           z <= max_y );
+}
+
 static int draw_comparator( const void* a, const void* b )
 {
   ISO_Object_t* o1, *o2;

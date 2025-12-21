@@ -6,6 +6,7 @@ void Map_Draw( void );
 
 int IsGround( int x, int z );
 int CheckPlayersBounds( void );
+int CheckMapBounds( int x, int z );
 
 #endif
 

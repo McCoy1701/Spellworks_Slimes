@@ -11,6 +11,7 @@ void BulletEntityInit( Entity_t* e )
   e->base = 35;
   e->speed = 4;
   e->facing = world.player->facing;
+  STRNCPY( e->name, "bullet", MAX_NAME_LENGTH );
 
 }
 

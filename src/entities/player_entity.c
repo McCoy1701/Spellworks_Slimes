@@ -12,6 +12,7 @@ void PlayerEntityInit( Entity_t* e )
   e->speed = 2;
   e->facing = FACING_SOUTH;
   e->state = STATE_IDLE;
+  STRNCPY( e->name, "player", MAX_NAME_LENGTH );
 
   world.player = e;
 }

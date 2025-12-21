@@ -16,14 +16,13 @@ typedef struct _entity
   int layer;
   int dead;
   int state;
+  int id;
   unsigned long flags;
   unsigned long iso_flags;
   aAnimation_t* running[FACING_MAX];
   aAnimation_t* idle[FACING_MAX];
   aImage_t* img;
   int facing;
-  void ( *touch )( struct _entity* self, struct _entity* other );
-  struct _entity* next;
 }Entity_t;
 
 typedef struct
@@ -47,7 +46,8 @@ typedef struct
 typedef struct
 {
   Map_Tile_t map[MAP_SIZE * MAP_SIZE];
-  Entity_t entity_head, *entity_tail;
+  dArray_t* entity_pool;
+  int entity_count;
   Entity_t* player;
   aRectf_t player_iso_rect;
   int cursor_x, cursor_y;

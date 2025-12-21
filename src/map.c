@@ -65,6 +65,14 @@ int IsGround( int x, int z )
            world.map[index].tile < TILE_WALL );
 }
 
+int CheckMapBounds( int x, int z )
+{
+  return ( x >= 0 &&
+           z >= 0 && 
+           x <= MAP_SIZE &&
+           z <= MAP_SIZE );
+}
+
 int CheckPlayersBounds( void )
 {
   return ( world.player->x >= 0 &&

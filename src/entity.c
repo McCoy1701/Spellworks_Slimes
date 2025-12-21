@@ -14,8 +14,7 @@ static void PlaceRandom( int* x, int* z );
 
 void EntitiesInit( void )
 {
-  memset( &world.entity_head, 0, sizeof( Entity_t ) );
-  world.entity_tail = &world.entity_head;
+  d_ArrayInit( MAX_ENTITIES, sizeof( Entity_t ) );
 
   AddEntities();
 }
@@ -25,8 +24,11 @@ void EntitiesDraw( void )
   Entity_t* e;
   int sx, sy;
 
-  for ( e = world.entity_head.next; e != NULL; e = e->next )
+  for ( int i = 0; i < MAX_ENTITIES; i++ )
   {
+    e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
+    if ( e == NULL ) continue;
+
     CalculateScreenPos( e, &sx, &sy );
     if ( e ==  world.player )
     {
@@ -51,8 +53,11 @@ void EntitiesDraw( void )
 Entity_t* EntitiesAt( int x, int z )
 {
   Entity_t* e;
-  for ( e = world.entity_head.next; e != NULL; e = e->next )
+  for ( int i = 0; i < MAX_ENTITIES; i++ )
   {
+    e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
+    if ( e == NULL ) return NULL;
+    
     if ( e->x == x && e->z == z )
     {
       return e;

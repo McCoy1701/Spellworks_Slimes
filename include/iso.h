@@ -14,5 +14,7 @@ void ISO_AddAnimatedObject( float x, float z, float sx, float sy,
 void ISO_AddStaticObject( float x, float z, float sx, float sy,
                           aImage_t* img, int layer );
 
+int ISO_CheckBounds( float x, float z );
+
 #endif
 

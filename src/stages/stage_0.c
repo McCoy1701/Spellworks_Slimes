@@ -21,6 +21,8 @@ void Stage0Init( void )
 {
   app.delegate.logic = s0_Logic;
   app.delegate.draw  = s0_Draw;
+
+  world.entity_count = 0;  
   
   Map_Init();
 
