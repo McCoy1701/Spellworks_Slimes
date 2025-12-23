@@ -14,7 +14,7 @@ static void PlaceRandom( int* x, int* z );
 
 void EntitiesInit( void )
 {
-  d_ArrayInit( MAX_ENTITIES, sizeof( Entity_t ) );
+  world.entity_pool = d_ArrayInit( MAX_ENTITIES, sizeof( Entity_t ) );
 
   AddEntities();
 }
@@ -24,7 +24,7 @@ void EntitiesDraw( void )
   Entity_t* e;
   int sx, sy;
 
-  for ( int i = 0; i < MAX_ENTITIES; i++ )
+  for ( size_t i = 0; i < world.entity_count; i++ )
   {
     e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
     if ( e == NULL ) continue;

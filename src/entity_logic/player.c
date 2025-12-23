@@ -18,6 +18,8 @@ void PlayerInit( void )
   uint32_t frame_duration = 50;
   uint32_t idle_frame_duration = 100;
   
+  world.player = d_ArrayGet( world.entity_pool, 0 );
+  
   LoadAnimation( w, h, frame_count, frame_duration,
                  "resources/assets/character/player_run_",
                  world.player->running );

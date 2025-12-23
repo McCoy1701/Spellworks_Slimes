@@ -28,11 +28,14 @@ void EntityFactoryInit( void )
 
 Entity_t* EntityInit( const char* name )
 {
-  Entity_t* e;
-
-  e = SpawnEntity();
+  Entity_t* e = SpawnEntity();
 
   GetInitFunc( name )->init(e);
+  
+  e->id = world.entity_count;
+
+  d_ArrayAppend( world.entity_pool, e );
+  world.entity_count++;
 
   return e;
 }
@@ -42,10 +45,12 @@ void EntityDestroy( Entity_t* e )
   if ( e == NULL ) return;
   
   d_ArrayRemove( world.entity_pool, e->id );
+  if ( e->img )
+  {
+    a_ImageFree( e->img );
+  }
 
-  a_ImageFree( e->img );
-
-  if ( e->running[0] && e->idle[0] )
+  if ( e->running[0] != NULL && e->idle[0] != NULL )
   {
     for ( int i = 0; i < FACING_MAX; i++ )
     {
@@ -53,8 +58,6 @@ void EntityDestroy( Entity_t* e )
       a_AnimationFree( e->idle[i] );
     }
   }
-
-  free( e );
 }
 
 static Entity_t* SpawnEntity( void )
@@ -63,9 +66,6 @@ static Entity_t* SpawnEntity( void )
   {
     Entity_t* e = malloc( sizeof( Entity_t ) );
     memset( e, 0, sizeof( Entity_t ) );
-
-    d_ArrayAppend( world.entity_pool, e );
-    world.entity_count++;
 
     return e;
   }

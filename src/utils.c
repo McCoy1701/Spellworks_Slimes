@@ -5,6 +5,7 @@
 
 void CalculateScreenPos( Entity_t* e, int* sx, int* sy )
 {
+  if ( e == NULL || e->img == NULL ) return;
   *sx = CELL_WIDTH / 2;
   *sx -= e->img->rect.w / 2;
   
