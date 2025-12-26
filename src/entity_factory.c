@@ -32,8 +32,6 @@ Entity_t* EntityInit( const char* name )
 
   GetInitFunc( name )->init(e);
   
-  e->id = world.entity_count;
-
   d_ArrayAppend( world.entity_pool, e );
   world.entity_count++;
 
@@ -43,11 +41,12 @@ Entity_t* EntityInit( const char* name )
 void EntityDestroy( Entity_t* e )
 {
   if ( e == NULL ) return;
-  
-  d_ArrayRemove( world.entity_pool, e->id );
+
+  d_ArrayRemoveByReference( world.entity_pool, e );
   if ( e->img )
   {
     a_ImageFree( e->img );
+    e->img = NULL;
   }
 
   if ( e->running[0] != NULL && e->idle[0] != NULL )
@@ -56,8 +55,11 @@ void EntityDestroy( Entity_t* e )
     {
       a_AnimationFree( e->running[i] );
       a_AnimationFree( e->idle[i] );
+      e->running[i] = e->idle[i] = NULL;
     }
   }
+  e = NULL;
+  world.entity_count--;
 }
 
 static Entity_t* SpawnEntity( void )

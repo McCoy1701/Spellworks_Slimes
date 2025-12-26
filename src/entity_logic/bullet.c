@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "entity_factory.h"
 #include "iso.h"
+#include "map.h"
 #include "structs.h"
 
 extern World_t world;
@@ -25,7 +26,7 @@ void BulletLogic( float dt )
     
     if ( strncmp( e->name, "bullet", MAX_NAME_LENGTH ) == 0 )
     {
-      if ( ISO_CheckBounds( e->x, e->z ) )
+      if ( CheckMapBounds( e->x, e->z ) )
       {
         int dx = 0;
         int dz = 0;
@@ -51,7 +52,7 @@ void BulletLogic( float dt )
       
       else
       {
-        EntityDestroy( e );
+        e->dead = 1;
       }
     }
   }

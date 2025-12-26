@@ -16,7 +16,6 @@ typedef struct _entity
   int layer;
   int dead;
   int state;
-  int id;
   unsigned long flags;
   unsigned long iso_flags;
   aAnimation_t* running[FACING_MAX];
@@ -47,7 +46,7 @@ typedef struct
 {
   Map_Tile_t map[MAP_SIZE * MAP_SIZE];
   dArray_t* entity_pool;
-  size_t entity_count;
+  int entity_count;
   Entity_t* player;
   aRectf_t player_iso_rect;
   int cursor_x, cursor_y;

@@ -24,10 +24,16 @@ void EntitiesDraw( void )
   Entity_t* e;
   int sx, sy;
 
-  for ( size_t i = 0; i < world.entity_count; i++ )
+  for ( int i = 0; i < world.entity_count; i++ )
   {
     e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
     if ( e == NULL ) continue;
+    
+    if ( e->dead )
+    {
+      EntityDestroy( e );
+      continue;
+    }
 
     CalculateScreenPos( e, &sx, &sy );
     if ( e ==  world.player )
