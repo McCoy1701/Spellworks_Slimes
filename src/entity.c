@@ -15,6 +15,7 @@ static void PlaceRandom( int* x, int* z );
 void EntitiesInit( void )
 {
   world.entity_pool = d_ArrayInit( MAX_ENTITIES, sizeof( Entity_t ) );
+  world.projectile_pool = d_ArrayInit( MAX_PROJECTILES, sizeof( Entity_t ) );
 
   AddEntities();
 }

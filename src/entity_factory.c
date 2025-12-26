@@ -3,6 +3,7 @@
 
 #include "defines.h"
 #include "structs.h"
+#include "entity_factory.h"
 
 #include "entities/player_entity.h"
 #include "entities/bullet_entity.h"
@@ -38,11 +39,38 @@ Entity_t* EntityInit( const char* name )
   return e;
 }
 
+Entity_t* ProjectileInit( const char* name )
+{
+  Entity_t* e = SpawnEntity();
+
+  GetInitFunc( name )->init(e);
+  
+  d_ArrayAppend( world.projectile_pool, e );
+  world.entity_count++;
+
+  return e;
+}
+
+void EntityPoolRemove( Entity_t* e )
+{
+  d_ArrayRemoveByReference( world.entity_pool, e );
+
+  EntityDestroy( e );
+  world.entity_count--;
+}
+
+void ProjectilePoolRemove( Entity_t* e )
+{
+  d_ArrayRemoveByReference( world.projectile_pool, e );
+
+  EntityDestroy( e );
+  world.projectile_count--;
+}
+
 void EntityDestroy( Entity_t* e )
 {
   if ( e == NULL ) return;
 
-  d_ArrayRemoveByReference( world.entity_pool, e );
   if ( e->img )
   {
     a_ImageFree( e->img );
@@ -59,7 +87,6 @@ void EntityDestroy( Entity_t* e )
     }
   }
   e = NULL;
-  world.entity_count--;
 }
 
 static Entity_t* SpawnEntity( void )

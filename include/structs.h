@@ -46,7 +46,9 @@ typedef struct
 {
   Map_Tile_t map[MAP_SIZE * MAP_SIZE];
   dArray_t* entity_pool;
+  dArray_t* projectile_pool;
   int entity_count;
+  int projectile_count;
   Entity_t* player;
   aRectf_t player_iso_rect;
   int cursor_x, cursor_y;

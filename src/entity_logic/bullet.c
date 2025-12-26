@@ -11,7 +11,7 @@ extern World_t world;
 
 void BulletInit( void )
 {
-  Entity_t* e = EntityInit( "bullet_entity" );
+  Entity_t* e = ProjectileInit( "bullet_entity" );
   e->x = world.player->x;
   e->z = world.player->z;
 }
