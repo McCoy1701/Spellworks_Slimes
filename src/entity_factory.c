@@ -32,9 +32,11 @@ Entity_t* EntityInit( const char* name )
   Entity_t* e = SpawnEntity();
 
   GetInitFunc( name )->init(e);
+
+  e->id = world.stats.tl_entities;
   
   d_ArrayAppend( world.entity_pool, e );
-  world.entity_count++;
+  world.stats.tl_entities++;
 
   return e;
 }
@@ -44,9 +46,11 @@ Entity_t* ProjectileInit( const char* name )
   Entity_t* e = SpawnEntity();
 
   GetInitFunc( name )->init(e);
+
+  e->id = world.stats.tl_projectiles;
   
   d_ArrayAppend( world.projectile_pool, e );
-  world.entity_count++;
+  world.stats.tl_projectiles++;
 
   return e;
 }
@@ -56,7 +60,6 @@ void EntityPoolRemove( Entity_t* e )
   d_ArrayRemoveByReference( world.entity_pool, e );
 
   EntityDestroy( e );
-  world.entity_count--;
 }
 
 void ProjectilePoolRemove( Entity_t* e )
@@ -64,7 +67,6 @@ void ProjectilePoolRemove( Entity_t* e )
   d_ArrayRemoveByReference( world.projectile_pool, e );
 
   EntityDestroy( e );
-  world.projectile_count--;
 }
 
 void EntityDestroy( Entity_t* e )
@@ -91,7 +93,7 @@ void EntityDestroy( Entity_t* e )
 
 static Entity_t* SpawnEntity( void )
 {
-  if ( world.entity_count < MAX_ENTITIES )
+  if ( world.entity_pool->count < MAX_ENTITIES )
   {
     Entity_t* e = malloc( sizeof( Entity_t ) );
     memset( e, 0, sizeof( Entity_t ) );

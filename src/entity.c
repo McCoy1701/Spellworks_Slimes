@@ -25,14 +25,14 @@ void EntitiesDraw( void )
   Entity_t* e;
   int sx, sy;
 
-  for ( int i = 0; i < world.entity_count; i++ )
+  for ( int i = 0; i < world.entity_pool->count; i++ )
   {
     e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
     if ( e == NULL ) continue;
     
     if ( e->dead )
     {
-      EntityDestroy( e );
+      EntityPoolRemove( e );
       continue;
     }
 
@@ -60,7 +60,7 @@ void EntitiesDraw( void )
 Entity_t* EntitiesAt( int x, int z )
 {
   Entity_t* e;
-  for ( int i = 0; i < MAX_ENTITIES; i++ )
+  for ( int i = 0; i < world.entity_pool->count; i++ )
   {
     e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
     if ( e == NULL ) return NULL;

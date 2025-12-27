@@ -8,6 +8,7 @@
 #include "iso.h"
 #include "main_menu.h"
 #include "map.h"
+#include "projectiles.h"
 #include "structs.h"
 
 static void Do_Cursor( void );
@@ -22,7 +23,8 @@ void Stage0Init( void )
   app.delegate.logic = s0_Logic;
   app.delegate.draw  = s0_Draw;
 
-  world.entity_count = 0;  
+  world.stats.tl_entities = 0;  
+  world.stats.tl_projectiles = 0;  
   
   Map_Init();
 
@@ -74,6 +76,7 @@ static void s0_Draw( float dt )
   ISO_Clear();
   Map_Draw();
   EntitiesDraw();
+  ProjectileDraw();
   ISO_Draw();
 
   aColor_t color_something = { .r = 0, .g = 0, .b = 255, .a = 255 };

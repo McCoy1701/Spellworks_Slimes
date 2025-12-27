@@ -54,6 +54,7 @@ SPELLWORKS_SRCS = entity.c \
 									iso.c \
 									main_menu.c \
 									map.c \
+									projectiles.c \
 									utils.c \
 
 NATIVE_LIB_OBJS = $(patsubst %.c, $(OBJ_DIR_NATIVE)/%.o, $(SPELLWORKS_SRCS))

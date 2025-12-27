@@ -19,9 +19,9 @@ void BulletInit( void )
 void BulletLogic( float dt )
 {
   Entity_t* e;
-  for ( int i = 0; i < world.entity_count; i++ )
+  for ( int i = 0; i < world.projectile_pool->count; i++ )
   {
-    e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
+    e = (Entity_t*)d_ArrayGet( world.projectile_pool, i );
     if ( e == NULL ) continue;
     
     if ( strncmp( e->name, "bullet", MAX_NAME_LENGTH ) == 0 )

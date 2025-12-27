@@ -16,6 +16,7 @@ typedef struct _entity
   int layer;
   int dead;
   int state;
+  int id;
   unsigned long flags;
   unsigned long iso_flags;
   aAnimation_t* running[FACING_MAX];
@@ -44,11 +45,16 @@ typedef struct
 
 typedef struct
 {
+  int tl_projectiles; //tl == total lifetime
+  int tl_entities;
+} Stats_t;
+
+typedef struct
+{
   Map_Tile_t map[MAP_SIZE * MAP_SIZE];
   dArray_t* entity_pool;
   dArray_t* projectile_pool;
-  int entity_count;
-  int projectile_count;
+  Stats_t stats;
   Entity_t* player;
   aRectf_t player_iso_rect;
   int cursor_x, cursor_y;
