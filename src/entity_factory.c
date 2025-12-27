@@ -33,8 +33,6 @@ Entity_t* EntityInit( const char* name )
 
   GetInitFunc( name )->init(e);
 
-  e->id = world.stats.tl_entities;
-  
   d_ArrayAppend( world.entity_pool, e );
   world.stats.tl_entities++;
 
@@ -47,8 +45,6 @@ Entity_t* ProjectileInit( const char* name )
 
   GetInitFunc( name )->init(e);
 
-  e->id = world.stats.tl_projectiles;
-  
   d_ArrayAppend( world.projectile_pool, e );
   world.stats.tl_projectiles++;
 
