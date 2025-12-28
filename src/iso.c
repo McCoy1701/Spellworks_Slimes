@@ -10,6 +10,7 @@ static int draw_comparator( const void* a, const void* b );
 
 static int iso_object_count;
 static ISO_Object_t iso_objects[MAX_ISO_OBJECTS];
+static ISO_Object_t* render_list[MAX_ISO_OBJECTS];
 static double iso_draw_timer;
 
 void ISO_Init( void )
@@ -25,30 +26,31 @@ void ISO_Logic( float dt )
 
 void ISO_Draw( void )
 {
-  qsort( iso_objects, iso_object_count, sizeof( ISO_Object_t ), draw_comparator );
+  for ( int i = 0; i < iso_object_count; i++ )
+  {
+    render_list[i] = &iso_objects[i];
+  }
+
+  qsort( render_list, iso_object_count, sizeof( ISO_Object_t* ), draw_comparator );
 
   for ( int i = 0; i < iso_object_count; i++ )
   {
+    ISO_Object_t* obj = render_list[i];
     if ( iso_draw_timer >= i )
     {
-      if ( iso_objects[i].animated )
+      if ( obj->animated )
       {
-        aPoint2f_t pos = (aPoint2f_t){ .x = iso_objects[i].sx,
-                                       .y = iso_objects[i].sy };
-        a_AnimationPlay( pos, iso_objects[i].anim );
+        aPoint2f_t pos = (aPoint2f_t){ .x = obj->sx,
+                                       .y = obj->sy };
+        a_AnimationPlay( pos, obj->anim );
       }
       
       else
       {
-        if ( iso_objects[i].img->color_modulate )
-        {
-          printf( "color: %d, %d, %d, %d, %d\n", iso_objects[i].img->color_modulate,
-                 iso_objects[i].img->color.r,
-                 iso_objects[i].img->color.g,
-                 iso_objects[i].img->color.b,
-                 iso_objects[i].img->color.a );
-        }
-        a_Blit( iso_objects[i].img, iso_objects[i].sx, iso_objects[i].sy );
+        obj->img->color = obj->color;
+        obj->img->color_modulate = obj->modulate_color;
+        
+        a_Blit( obj->img, obj->sx, obj->sy );
       }
     }
   }
@@ -57,6 +59,7 @@ void ISO_Draw( void )
 void ISO_Clear( void )
 {
   memset( iso_objects, 0, ( sizeof( ISO_Object_t ) * iso_object_count ) );
+  memset( render_list, 0, ( sizeof( ISO_Object_t* ) * iso_object_count ) );
   iso_object_count = 0;
 }
 
@@ -84,20 +87,20 @@ void ISO_AddAnimatedObject( float x, float z, float sx, float sy, aAnimation_t* 
 
 void ISO_AddStaticObject( float x, float z, float sx, float sy, aImage_t* img, int layer )
 {
+  ISO_Object_t* o;
+
   if ( iso_object_count < MAX_ISO_OBJECTS )
   {
-    ISO_Convert( x, z, &iso_objects[iso_object_count].x, &iso_objects[iso_object_count].y );
+    o = &iso_objects[iso_object_count++];
 
-    iso_objects[iso_object_count].sx = iso_objects[iso_object_count].x + sx;
-    iso_objects[iso_object_count].sy = iso_objects[iso_object_count].y + sy;
-    iso_objects[iso_object_count].layer = layer;
-    iso_objects[iso_object_count].img = img;
-    if ( iso_objects[iso_object_count].img->color_modulate )
-    {
-      //printf( "iso static img: %d, %f, %f\n", iso_objects[iso_object_count].img->color_modulate, x, z );
+    ISO_Convert( x, z, &o->x, &o->y );
 
-    }
-    iso_object_count++;
+    o->sx = o->x + sx;
+    o->sy = o->y + sy;
+    o->layer = layer;
+    o->img = img;
+    o->modulate_color = img->color_modulate;
+    o->color = img->color;
   }
 }
 
@@ -117,8 +120,10 @@ int ISO_CheckBounds( float x, float z )
 static int draw_comparator( const void* a, const void* b )
 {
   ISO_Object_t* o1, *o2;
-  o1 = (ISO_Object_t*)a;
-  o2 = (ISO_Object_t*)b;
-  return o1->y - o2->y;
+  o1 = *(ISO_Object_t**)a;
+  o2 = *(ISO_Object_t**)b;
+  if ( o1->y < o2->y ) return -1;
+  if ( o1->y > o2->y ) return 1;
+  return 0;
 }
 

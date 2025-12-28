@@ -35,6 +35,7 @@ typedef struct
   int animated;
   aImage_t* img;
   aAnimation_t* anim;
+  int modulate_color;
   aColor_t color;
 } ISO_Object_t;
 
