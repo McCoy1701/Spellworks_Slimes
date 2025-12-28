@@ -41,6 +41,8 @@ typedef struct
 typedef struct
 {
   int tile;
+  int modulate_color;
+  aColor_t color;
 } Map_Tile_t;
 
 typedef struct

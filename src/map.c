@@ -10,6 +10,8 @@ extern World_t world;
 static aImage_t* tiles[MAX_TILES];
 static aImage_t* selected_tile;
 
+int half = MAP_SIZE / 2;
+
 void Map_Init( void )
 {
   for ( int i = 0; i < MAP_SIZE; i++ )
@@ -18,6 +20,29 @@ void Map_Init( void )
     {
       int index = INDEX_2( i, j, MAP_SIZE );
       world.map[index].tile = 0;
+      world.map[index].modulate_color = 0;
+      world.map[index].color = white;
+      
+      if ( i == 0 && ( j >= (half - 1) && j <= (half + 2) ) )
+      {
+        world.map[index].modulate_color = 1;
+        world.map[index].color = red;
+      }
+      if ( j == 0 && ( i >= (half - 1) && i <= (half + 2) ) )
+      {
+        world.map[index].modulate_color = 1;
+        world.map[index].color = yellow;
+      }
+      if ( i == MAP_SIZE-1 && ( j >= (half - 1) && j <= (half + 2) ) )
+      {
+        world.map[index].modulate_color = 1;
+        world.map[index].color = blue;
+      }
+      if ( j == MAP_SIZE-1 && ( i >= (half - 1) && i <= (half + 2) ) )
+      {
+        world.map[index].modulate_color = 1;
+        world.map[index].color = cyan;
+      }
     }
   }
 
@@ -46,7 +71,11 @@ void Map_Draw( void )
 
         else
         {
-          ISO_AddStaticObject( i, j, 0, 0, tiles[n], LAYER_BACKGROUND );
+          aImage_t* img = tiles[n];
+          img->color_modulate = world.map[index].modulate_color;
+          img->color = world.map[index].color;
+          //printf("map draw: %d, %d %d\n", img->color_modulate, i, j );
+          ISO_AddStaticObject( i, j, 0, 0, img, LAYER_BACKGROUND );
         }
       }
     }

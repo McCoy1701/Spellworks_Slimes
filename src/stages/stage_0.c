@@ -22,7 +22,7 @@ void Stage0Init( void )
 {
   app.delegate.logic = s0_Logic;
   app.delegate.draw  = s0_Draw;
-
+  
   world.stats.tl_entities = 0;  
   world.stats.tl_projectiles = 0;  
   

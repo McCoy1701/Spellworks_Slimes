@@ -4,6 +4,8 @@
 #include "defines.h"
 #include "structs.h"
 
+extern World_t world;
+
 static int draw_comparator( const void* a, const void* b );
 
 static int iso_object_count;
@@ -23,24 +25,30 @@ void ISO_Logic( float dt )
 
 void ISO_Draw( void )
 {
-  ISO_Object_t* o;
-
   qsort( iso_objects, iso_object_count, sizeof( ISO_Object_t ), draw_comparator );
 
   for ( int i = 0; i < iso_object_count; i++ )
   {
     if ( iso_draw_timer >= i )
     {
-      o = &iso_objects[i];
-      if ( o->animated )
+      if ( iso_objects[i].animated )
       {
-        aPoint2f_t pos = (aPoint2f_t){ .x = o->sx, .y = o->sy };
-        a_AnimationPlay( pos, o->anim );
+        aPoint2f_t pos = (aPoint2f_t){ .x = iso_objects[i].sx,
+                                       .y = iso_objects[i].sy };
+        a_AnimationPlay( pos, iso_objects[i].anim );
       }
       
       else
       {
-        a_Blit( o->img, o->sx, o->sy );
+        if ( iso_objects[i].img->color_modulate )
+        {
+          printf( "color: %d, %d, %d, %d, %d\n", iso_objects[i].img->color_modulate,
+                 iso_objects[i].img->color.r,
+                 iso_objects[i].img->color.g,
+                 iso_objects[i].img->color.b,
+                 iso_objects[i].img->color.a );
+        }
+        a_Blit( iso_objects[i].img, iso_objects[i].sx, iso_objects[i].sy );
       }
     }
   }
@@ -76,16 +84,20 @@ void ISO_AddAnimatedObject( float x, float z, float sx, float sy, aAnimation_t* 
 
 void ISO_AddStaticObject( float x, float z, float sx, float sy, aImage_t* img, int layer )
 {
-  ISO_Object_t* o;
   if ( iso_object_count < MAX_ISO_OBJECTS )
   {
-    o = &iso_objects[iso_object_count++];
-    ISO_Convert( x, z, &o->x, &o->y );
+    ISO_Convert( x, z, &iso_objects[iso_object_count].x, &iso_objects[iso_object_count].y );
 
-    o->sx = o->x + sx;
-    o->sy = o->y + sy;
-    o->layer = layer;
-    o->img = img;
+    iso_objects[iso_object_count].sx = iso_objects[iso_object_count].x + sx;
+    iso_objects[iso_object_count].sy = iso_objects[iso_object_count].y + sy;
+    iso_objects[iso_object_count].layer = layer;
+    iso_objects[iso_object_count].img = img;
+    if ( iso_objects[iso_object_count].img->color_modulate )
+    {
+      //printf( "iso static img: %d, %f, %f\n", iso_objects[iso_object_count].img->color_modulate, x, z );
+
+    }
+    iso_object_count++;
   }
 }
 
