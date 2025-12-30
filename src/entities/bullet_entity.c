@@ -8,7 +8,7 @@ extern World_t world;
 void BulletEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/bullet.png" );
-  e->base = 35;
+  e->base = 10;
   e->speed = 4;
   e->facing = world.player->facing;
   STRNCPY( e->name, "bullet", MAX_NAME_LENGTH );

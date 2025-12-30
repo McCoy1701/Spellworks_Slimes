@@ -6,12 +6,35 @@
 #include "iso.h"
 #include "map.h"
 #include "structs.h"
+#include "utils.h"
 
 extern World_t world;
 
 void BulletInit( void )
 {
+  int w = 16;
+  int h = 16;
+  int frame_count = 4;
+  uint32_t frame_duration = 100;
+  
   Entity_t* e = ProjectileInit( "bullet_entity" );
+  
+  e->running[0] = a_AnimationCreate( 
+    "resources/assets/projectiles/bullet/Bullet_SheetR.png",
+    w, h, frame_count, frame_duration );
+  
+  e->running[1] = a_AnimationCreate(
+    "resources/assets/projectiles/bullet/Bullet_SheetL.png",
+    w, h, frame_count, frame_duration );
+  
+  e->running[2] = a_AnimationCreate( 
+    "resources/assets/projectiles/bullet/Bullet_SheetU.png",
+    w, h, frame_count, frame_duration );
+  
+  e->running[3] = a_AnimationCreate(
+    "resources/assets/projectiles/bullet/Bullet_SheetD.png",
+    w, h, frame_count, frame_duration );
+  
   e->x = world.player->x;
   e->z = world.player->z;
 }

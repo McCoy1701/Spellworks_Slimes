@@ -25,7 +25,34 @@ void ProjectileDraw( void )
     }
 
     CalculateScreenPos( e, &sx, &sy );
-    ISO_AddStaticObject( e->x, e->z, sx, sy, e->img, LAYER_MID );
+
+    int facing = 0;
+
+    if ( e->facing == FACING_EAST ||
+         e->facing == FACING_NORTH_EAST ||
+         e->facing == FACING_NORTH )
+    {
+      facing = 0;
+    }
+    
+    else if ( e->facing == FACING_NORTH_WEST )
+    {
+      facing = 2;
+    }
+
+    else if ( e->facing == FACING_SOUTH_EAST )
+    {
+      facing = 3;
+    }
+    
+    else 
+    {
+      facing = 1;
+    }
+
+    
+    ISO_AddAnimatedObject( e->x, e->z, sx+50, sy+50,
+                           e->running[facing], LAYER_MID ); //find out why 50
   }
 }
 

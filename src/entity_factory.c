@@ -8,6 +8,7 @@
 #include "entities/player_entity.h"
 #include "entities/bullet_entity.h"
 #include "entities/base_enemy_entity.h"
+#include "entities/slime_entities.h"
 
 extern World_t world;
 
@@ -25,6 +26,26 @@ void EntityFactoryInit( void )
   AddInitFunc( "player_entity", PlayerEntityInit );
   AddInitFunc( "bullet_entity", BulletEntityInit );
   AddInitFunc( "base_enemy_entity", BaseEnemyEntityInit );
+  AddInitFunc( "Amethyst_Slime", AmethystSlimeEntityInit );
+  AddInitFunc( "Black_Slime", BlackSlimeEntityInit );
+  AddInitFunc( "Blue_Slime", BlueSlimeEntityInit );
+  AddInitFunc( "Bronze_Slime", BronzeSlimeEntityInit );
+  AddInitFunc( "Chocolate_Slime", ChocolateSlimeEntityInit );
+  AddInitFunc( "Gold_Slime", GoldSlimeEntityInit );
+  AddInitFunc( "Green_Slime", GreenSlimeEntityInit );
+  AddInitFunc( "Inverted_Slime", InvertedSlimeEntityInit );
+  AddInitFunc( "Marmalade_Slime", MarmaladeSlimeEntityInit );
+  AddInitFunc( "Mint_Slime", MintSlimeEntityInit );
+  AddInitFunc( "Obsidian_Slime", ObsidianSlimeEntityInit );
+  AddInitFunc( "Polluted_Slime", PollutedSlimeEntityInit );
+  AddInitFunc( "Primordial_Slime", PrimordialSlimeEntityInit );
+  AddInitFunc( "Purple_Slime", PurpleSlimeEntityInit );
+  AddInitFunc( "Radioactive_Slime", RadioactiveSlimeEntityInit );
+  AddInitFunc( "Red_Slime", RedSlimeEntityInit );
+  AddInitFunc( "Sandstone_Slime", SandstoneSlimeEntityInit );
+  AddInitFunc( "Stone_Slime", StoneSlimeEntityInit );
+  AddInitFunc( "Water_Slime", WaterSlimeEntityInit );
+  AddInitFunc( "White_Slime", WhiteSlimeEntityInit );
 }
 
 Entity_t* EntityInit( const char* name )

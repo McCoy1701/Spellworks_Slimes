@@ -40,11 +40,12 @@ EMSCRIP_C_FLAGS = $(C_FLAGS) $(EFLAGS)
 ENTITIES_SRCS = player_entity.c \
 								bullet_entity.c \
 								base_enemy_entity.c \
+								slime_entities.c \
 
 ENTITY_LOGIC_SRCS = player.c \
 										bullet.c \
 		    						base_enemy.c \
-
+		    						slimes.c \
 
 STAGES_SRCS = stage_0.c \
 
