@@ -53,6 +53,8 @@ SPELLWORKS_SRCS = entity.c \
 									entity_factory.c \
 									image.c \
 									iso.c \
+									item.c \
+									item_factory.c \
 									main_menu.c \
 									map.c \
 									projectiles.c \
