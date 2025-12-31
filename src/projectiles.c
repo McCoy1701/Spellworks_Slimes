@@ -24,7 +24,7 @@ void ProjectileDraw( void )
       continue;
     }
 
-    CalculateScreenPos( e, &sx, &sy );
+    CalculateScreenPos( e->img, e->base, &sx, &sy );
 
     int facing = 0;
 

@@ -25,6 +25,19 @@ typedef struct _entity
   int facing;
 }Entity_t;
 
+typedef struct _item_t
+{
+  char name[MAX_NAME_LENGTH];
+  float x;
+  float z;
+  int base;
+  int layer;
+  int picked_up;
+  int weight;
+  unsigned long flags;
+  aImage_t* img;
+}Item_t;
+
 typedef struct
 {
   float x;  //world space
@@ -50,6 +63,7 @@ typedef struct
 {
   int tl_projectiles; //tl == total lifetime
   int tl_entities;
+  int tl_ground_items;
 } Stats_t;
 
 typedef struct
@@ -57,6 +71,7 @@ typedef struct
   Map_Tile_t map[MAP_SIZE * MAP_SIZE];
   dArray_t* entity_pool;
   dArray_t* projectile_pool;
+  dArray_t* ground_item_pool;
   Stats_t stats;
   Entity_t* player;
   aRectf_t player_iso_rect;
@@ -69,6 +84,13 @@ typedef struct _Entity_Init_Func
   void (*init)(Entity_t* e);
   struct _Entity_Init_Func* next;
 } Entity_Init_Func_t;
+
+typedef struct _Item_Init_Func
+{
+  char name[MAX_NAME_LENGTH];
+  void (*init)(Item_t* e);
+  struct _Item_Init_Func* next;
+} Item_Init_Func_t;
 
 #endif
 

@@ -36,7 +36,7 @@ void EntitiesDraw( void )
       continue;
     }
 
-    CalculateScreenPos( e, &sx, &sy );
+    CalculateScreenPos( e->img, e->base, &sx, &sy );
     if ( e ==  world.player )
     {
       if ( e->state == STATE_RUN )
