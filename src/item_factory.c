@@ -3,20 +3,53 @@
 
 #include "defines.h"
 #include "item_factory.h"
+#include "items_init.h"
 #include "structs.h"
 
 extern World_t world;
 
 static Item_t* SpawnItem( void );
 static Item_Init_Func_t* GetInitFunc( const char* name );
-static void AddInitFunc(const char* name, void (*init)( Item_t* e ) );
+static void AddInitFunc(const char* name, void (*init)( Item_t* i ) );
 
 static Item_Init_Func_t head, *tail;
 
 void ItemFactoryInit( void )
 {
-  memset( &head, 0, sizeof( Entity_Init_Func_t ) );
+  memset( &head, 0, sizeof( Item_Init_Func_t ) );
   tail = &head;
+  
+  AddInitFunc( "Blue_Drink", BlueDrinkItemInit );
+  AddInitFunc( "Orange_Drink", OrangeDrinkItemInit );
+  AddInitFunc( "Green_Drink", GreenDrinkItemInit );
+  AddInitFunc( "Red_Drink", RedDrinkItemInit );
+  AddInitFunc( "Burger", BurgerItemInit );
+  AddInitFunc( "Fries", FriesItemInit );
+  AddInitFunc( "White_Cake", WhiteCakeItemInit );
+  AddInitFunc( "Chocolate_Cake", ChocolateCakeItemInit );
+  AddInitFunc( "Chocolate_Bar", ChocolateBarItemInit );
+  AddInitFunc( "Strawberry_Chocolate_Bar", StrawberryChocolateBarItemInit );
+  AddInitFunc( "White_Chocolate_Bar", WhiteChocolateBarItemInit );
+  AddInitFunc( "Grilled_Cheese", GrilledCheeseItemInit );
+  AddInitFunc( "Strawberry_Ice_Cream_Cone", StrawberryIceCreamConeItemInit );
+  AddInitFunc( "Mint_Ice_Cream_Cone", MintIceCreamConeItemInit );
+  AddInitFunc( "Vanilla_Ice_Cream_Cone", VanillaIceCreamConeItemInit );
+  AddInitFunc( "Chocolate_Ice_Cream_Cone", ChocolateIceCreamConeItemInit );
+  AddInitFunc( "Apple", AppleItemInit );
+  AddInitFunc( "Orange", OrangeItemInit );
+  AddInitFunc( "Pear", PearItemInit );
+  AddInitFunc( "Grape", GrapeItemInit );
+  AddInitFunc( "Peach", PeachItemInit );
+  AddInitFunc( "Blackberry", BlackberryItemInit );
+  AddInitFunc( "Banana", BananaItemInit );
+  AddInitFunc( "Milk", MilkItemInit );
+  AddInitFunc( "Strawberry_Milk", StrawberryMilkItemInit );
+  AddInitFunc( "Chocolate_Milk", ChocolateMilkItemInit );
+  AddInitFunc( "Blue_Candy", BlueCandyItemInit );
+  AddInitFunc( "Purple_Candy", PurpleCandyItemInit );
+  AddInitFunc( "Red_Candy", RedCandyItemInit );
+  AddInitFunc( "Pancakes", PancakesItemInit );
+  AddInitFunc( "Salad", SaladItemInit );
 }
 
 Item_t* ItemInit( const char* name )
@@ -84,7 +117,7 @@ static Item_Init_Func_t* GetInitFunc( const char* name )
   return NULL;
 }
 
-static void AddInitFunc(const char* name, void (*init)( Item_t* e ) )
+static void AddInitFunc(const char* name, void (*init)( Item_t* i ) )
 {
   Item_Init_Func_t* init_func = malloc( sizeof( Item_Init_Func_t ) );
   memset( init_func, 0, sizeof( Item_Init_Func_t ) );

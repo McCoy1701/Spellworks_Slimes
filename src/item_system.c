@@ -2,16 +2,17 @@
 
 #include "defines.h"
 #include "item_factory.h"
+#include "items_init.h"
 #include "iso.h"
 #include "structs.h"
 #include "utils.h"
 
 extern World_t world;
 
-void ItemsInit( void )
+void ItemSystemInit( void )
 {
   world.ground_item_pool = d_ArrayInit( MAX_GROUND_ITEMS, sizeof( Item_t ) );
-
+  ItemsLoadTextures();
 }
 
 void ItemsDraw( void )

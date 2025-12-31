@@ -8,6 +8,12 @@
 
 extern World_t world;
 
+void SlimesLogic( float dt )
+{
+
+}
+
+
 void AmethystSlimeInit( int x, int z )
 {
   int w = 16;
@@ -346,10 +352,5 @@ void WhiteSlimeInit( int x, int z )
   
   e->x = x;
   e->z = z;
-}
-
-void SlimeLogic( float dt )
-{
-
 }
 

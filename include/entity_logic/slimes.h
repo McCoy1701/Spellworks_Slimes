@@ -22,7 +22,7 @@ void StoneSlimeInit( int x, int z );
 void WaterSlimeInit( int x, int z );
 void WhiteSlimeInit( int x, int z );
 
-void SlimeLogic( float dt );
+void SlimesLogic( float dt );
 
 #endif
 
