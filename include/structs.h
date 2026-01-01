@@ -64,6 +64,7 @@ typedef struct
   int tl_projectiles; //tl == total lifetime
   int tl_entities;
   int tl_ground_items;
+  int tl_stage_count;
 } Stats_t;
 
 typedef struct
@@ -76,6 +77,7 @@ typedef struct
   Entity_t* player;
   aRectf_t player_iso_rect;
   int cursor_x, cursor_y;
+  aTimer_t stage_timer;
 } World_t;
 
 typedef struct _Entity_Init_Func
