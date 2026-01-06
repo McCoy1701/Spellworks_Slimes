@@ -94,5 +94,12 @@ typedef struct _Item_Init_Func
   struct _Item_Init_Func* next;
 } Item_Init_Func_t;
 
+typedef struct
+{
+  dArray_t* enemy_pool;
+  aTimer_t* timer;
+  uint32_t wait_ms;
+} EnemySpawner_t;
+
 #endif
 

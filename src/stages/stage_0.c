@@ -2,6 +2,7 @@
 #include <Archimedes.h>
 
 #include "defines.h"
+#include "enemy_spawner.h"
 #include "entity.h"
 #include "entity_logic/player.h"
 #include "entity_factory.h"
@@ -15,8 +16,11 @@ static void Do_Cursor( void );
 
 World_t world;
 
+EnemySpawner_t* g_spawner;
+
 static void s0_Logic( float );
 static void s0_Draw( float );
+static void Load_Enemies( void );
 
 void Stage0Init( void )
 {
@@ -35,6 +39,8 @@ void Stage0Init( void )
   EntitiesInit();
 
   PlayerInit();
+
+  Load_Enemies();
 
   a_WidgetsInit( "resources/widgets/inventory.auf" );
   app.active_widget = a_GetWidget( "inv_screen" );
@@ -67,6 +73,7 @@ static void s0_Logic( float dt )
   ISO_Logic( dt );
   Do_Cursor();
   PlayerLogic( dt );
+  EnemySpawnerLogic( g_spawner );
 
   a_DoWidget();
 }
@@ -114,5 +121,32 @@ static void Do_Cursor( void )
   world.cursor_x = round( ( ( sx / CELL_WIDTH ) - ( sy / CELL_HEIGHT ) ) );
   world.cursor_y = round( ( ( sx / CELL_WIDTH ) + ( sy / CELL_HEIGHT ) ) );
 
+}
+
+static void Load_Enemies( void )
+{
+  dArray_t* enemy_pool = d_ArrayInit( 100, ( sizeof( char ) * MAX_NAME_LENGTH ) );
+
+  char* red = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  if ( red == NULL ) return;
+  STRNCPY( red, "Red_Slime", MAX_NAME_LENGTH );
+  d_ArrayAppend( enemy_pool, red );
+  
+  char* blue = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  if ( blue == NULL ) return;
+  STRNCPY( blue, "Blue_Slime", MAX_NAME_LENGTH );
+  d_ArrayAppend( enemy_pool, blue );
+  
+  char* green = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  if ( green == NULL ) return;
+  STRNCPY( green, "Green_Slime", MAX_NAME_LENGTH );
+  d_ArrayAppend( enemy_pool, green );
+  
+  char* gold = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  if ( gold == NULL ) return;
+  STRNCPY( gold, "Gold_Slime", MAX_NAME_LENGTH );
+  d_ArrayAppend( enemy_pool, gold );
+
+  g_spawner = EnemySpawnerInit( enemy_pool, 250 );
 }
 

@@ -108,5 +108,13 @@ enum
   FOOD_MAX
 };
 
+enum
+{
+  SLIME_RED = 0,
+  SLIME_BLUE,
+  SLIME_GREEN,
+  SLIME_GOLD,
+};
+
 #endif
 

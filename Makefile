@@ -49,7 +49,8 @@ ENTITY_LOGIC_SRCS = player.c \
 
 STAGES_SRCS = stage_0.c \
 
-SPELLWORKS_SRCS = entity.c \
+SPELLWORKS_SRCS = enemy_spawner.c \
+									entity.c \
 									entity_factory.c \
 									image.c \
 									iso.c \
