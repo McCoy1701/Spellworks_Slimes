@@ -10,7 +10,16 @@ extern World_t world;
 
 void SlimesLogic( float dt )
 {
+  Entity_t* e;
 
+  for ( int i = 0; i < world.entity_pool->count; i++ )
+  {
+    e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
+    if ( e == NULL ) continue;
+
+    if ( e == world.player ) continue;
+
+  } 
 }
 
 
