@@ -38,3 +38,8 @@ void LoadAnimation( int w, int h, int frame_count,
 
 }
 
+int ConvertEnemyNameToId( const char* name )
+{
+  
+}
+

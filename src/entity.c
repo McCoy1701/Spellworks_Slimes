@@ -52,7 +52,7 @@ void EntitiesDraw( void )
     
     else
     {
-      ISO_AddStaticObject( e->x, e->z, sx, sy, e->img, LAYER_MID );
+      ISO_AddAnimatedObject( e->x, e->z, sx, sy, e->running[0], LAYER_MID );
     }
   }
 }

@@ -125,26 +125,26 @@ static void Do_Cursor( void )
 
 static void Load_Enemies( void )
 {
-  dArray_t* enemy_pool = d_ArrayInit( 100, ( sizeof( char ) * MAX_NAME_LENGTH ) );
+  dArray_t* enemy_pool = d_ArrayInit( 100, sizeof( int ) );
 
-  char* red = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  int* red = malloc( sizeof( int ) );
   if ( red == NULL ) return;
-  STRNCPY( red, "Red_Slime", MAX_NAME_LENGTH );
+  *red = SLIME_RED;
   d_ArrayAppend( enemy_pool, red );
   
-  char* blue = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  int* blue = malloc( sizeof( int ) );
   if ( blue == NULL ) return;
-  STRNCPY( blue, "Blue_Slime", MAX_NAME_LENGTH );
+  *blue = SLIME_BLUE;
   d_ArrayAppend( enemy_pool, blue );
   
-  char* green = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  int* green = malloc( sizeof( int ) );
   if ( green == NULL ) return;
-  STRNCPY( green, "Green_Slime", MAX_NAME_LENGTH );
+  *green = SLIME_GREEN;
   d_ArrayAppend( enemy_pool, green );
   
-  char* gold = malloc( sizeof( char ) * MAX_NAME_LENGTH );
+  int* gold = malloc( sizeof( int ) );
   if ( gold == NULL ) return;
-  STRNCPY( gold, "Gold_Slime", MAX_NAME_LENGTH );
+  *gold = SLIME_GOLD;
   d_ArrayAppend( enemy_pool, gold );
 
   g_spawner = EnemySpawnerInit( enemy_pool, 250 );
