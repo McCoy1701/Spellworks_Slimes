@@ -9,9 +9,7 @@
 typedef struct _entity
 {
   char name[MAX_NAME_LENGTH];
-  float x;
-  float z;
-  float speed;
+  dKinematicBody_t* body;
   int base;
   int layer;
   int dead;
