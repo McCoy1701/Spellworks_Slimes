@@ -85,6 +85,10 @@ static void AddEntities( void )
   PlaceRandom( &x, &z );
 
   e = EntityInit( "player_entity" );
+  if ( e->body == NULL )
+  {
+    printf("no body\n");
+  }
   e->body->position.x = x;
   e->body->position.z = z;
 }

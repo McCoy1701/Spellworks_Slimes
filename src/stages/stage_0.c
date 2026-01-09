@@ -5,6 +5,7 @@
 #include "enemy_spawner.h"
 #include "entity.h"
 #include "entity_logic/player.h"
+#include "entity_logic/slimes.h"
 #include "entity_factory.h"
 #include "iso.h"
 #include "main_menu.h"
@@ -74,6 +75,7 @@ static void s0_Logic( float dt )
   Do_Cursor();
   PlayerLogic( dt );
   EnemySpawnerLogic( g_spawner );
+  SlimesLogic( dt );
 
   a_DoWidget();
 }

@@ -41,7 +41,7 @@ void ISO_Draw( void )
       if ( obj->animated )
       {
         aPoint2f_t pos = (aPoint2f_t){ .x = obj->sx,
-                                       .y = obj->sy };
+                                       .y = obj->sz };
         a_AnimationPlay( pos, obj->anim );
       }
       
@@ -50,7 +50,7 @@ void ISO_Draw( void )
         obj->img->color = obj->color;
         obj->img->color_modulate = obj->modulate_color;
         
-        a_Blit( obj->img, obj->sx, obj->sy );
+        a_Blit( obj->img, obj->sx, obj->sz );
       }
     }
   }
@@ -63,23 +63,23 @@ void ISO_Clear( void )
   iso_object_count = 0;
 }
 
-void ISO_Convert( dVec3_t pos, float* sx, float* sy )
+void ISO_Convert( dVec3_t pos, float* sx, float* sz )
 {
   *sx = MAP_RENDER_X_OFFSET + ( ( pos.x * CELL_WIDTH / 2 ) + ( pos.z * CELL_WIDTH / 2 ) );
-  *sy = MAP_RENDER_Y_OFFSET + ( ( pos.z * CELL_HEIGHT / 2 ) - ( pos.x * CELL_HEIGHT / 2 ) );
+  *sz = MAP_RENDER_Y_OFFSET + ( ( pos.z * CELL_HEIGHT / 2 ) - ( pos.x * CELL_HEIGHT / 2 ) );
 }
 
-void ISO_AddAnimatedObject( dVec3_t pos, float sx, float sy,
+void ISO_AddAnimatedObject( dVec3_t pos, float sx, float sz,
                             aAnimation_t* anim, int layer )
 {
   ISO_Object_t* o;
   if ( iso_object_count < MAX_ISO_OBJECTS )
   {
     o = &iso_objects[iso_object_count++];
-    ISO_Convert( pos, &o->body->position.x, &o->body->position.z );
+    ISO_Convert( pos, &o->x, &o->z );
 
-    o->sx = o->body->position.x + sx;
-    o->sy = o->body->position.z + sy;
+    o->sx = o->x + sx;
+    o->sz = o->z + sz;
     o->layer = layer;
     o->anim = anim;
     o->animated = 1;
@@ -94,11 +94,10 @@ void ISO_AddStaticObject( dVec3_t pos, float sx, float sy, aImage_t* img,
   if ( iso_object_count < MAX_ISO_OBJECTS )
   {
     o = &iso_objects[iso_object_count++];
+    ISO_Convert( pos, &o->x, &o->z );
 
-    ISO_Convert( pos, &o->body->position.x, &o->body->position.z );
-
-    o->sx = o->body->position.x + sx;
-    o->sy = o->body->position.z + sy;
+    o->sx = o->x + sx;
+    o->sz = o->z + sy;
     o->layer = layer;
     o->img = img;
     o->modulate_color = img->color_modulate;
@@ -127,8 +126,8 @@ static int draw_comparator( const void* a, const void* b )
   ISO_Object_t* o1, *o2;
   o1 = *(ISO_Object_t**)a;
   o2 = *(ISO_Object_t**)b;
-  if ( o1->body->position.z < o2->body->position.z ) return -1;
-  if ( o1->body->position.z > o2->body->position.z ) return 1;
+  if ( o1->z < o2->z ) return -1;
+  if ( o1->z > o2->z ) return 1;
   return 0;
 }
 

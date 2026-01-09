@@ -37,9 +37,10 @@ typedef struct _item_t
 
 typedef struct
 {
-  dKinematicBody_t* body;
+  float x;
+  float z;
   float sx;  //screen space
-  float sy;
+  float sz;
   int layer;
   int animated;
   aImage_t* img;

@@ -18,20 +18,26 @@ void SlimesLogic( float dt )
     e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
     if ( e == NULL ) continue;
 
-    if ( e == world.player &&
-         !strncmp( e->name, "bullet", MAX_NAME_LENGTH ) ) continue; // if not
+    if ( e == world.player ||
+         strncmp( e->name, "bullet", MAX_NAME_LENGTH ) == 0 ) continue; // if not
     // player and not bullet then it must be a slime
+    
+    printf( "slime e->name: %s\n", e->name );
 
-    if ( CheckMapBounds( e->body->position.x, e->body->position.z ) )
-    {
-      d_KinematicBodySeek( e->body, world.player->body->position );
-      d_KinematicBodyUpdate( e->body );
-    }
-
-    else
-    {
-      e->dead = 1;
-    }
+    dVec3_t seek = {0}, desired = {0};
+    printf( "begin desired: %f, %f, %f\n", desired.x, desired.y, desired.z );
+    d_SubTwoVec3f( &desired, world.player->body->position, e->body->position );
+    printf( "sub desired: %f, %f, %f\n", desired.x, desired.y, desired.z );
+    //d_SetMagVec3f( &desired, desired, e->body->max_speed );
+    printf( "mag desired: %f, %f, %f\n", desired.x, desired.y, desired.z );
+    printf( "begin seek: %f, %f, %f\n", seek.x, seek.y, seek.z );
+    d_SubTwoVec3f( &seek, desired, e->body->velocity );
+    printf( "sub seek: %f, %f, %f\n", seek.x, seek.y, seek.z );
+    d_LimitVec3f( &seek, seek, e->body->max_force );
+    printf( "sub limit: %f, %f, %f\n", seek.x, seek.y, seek.z );
+    d_KinematicBodyApplyForce( e->body, seek );
+    //d_KinematicBodySeek( e->body, world.player->body->position );
+    d_KinematicBodyUpdate( e->body );
   } 
 }
 

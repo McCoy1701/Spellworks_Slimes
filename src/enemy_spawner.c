@@ -150,9 +150,6 @@ void EnemySpawnerLogic( EnemySpawner_t* spawner )
       default:
         break;
     }
-
-    printf( "ID:%d, rnd enmy: %d, rnd_dir: %d, rnd_spot: %d pos: %f, %f\n",
-            *enemy_id, rnd_enemy, rnd_dir, rnd_spot, spawn_pos.x, spawn_pos.y );
   }
 }
 

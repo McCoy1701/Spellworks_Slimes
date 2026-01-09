@@ -9,6 +9,7 @@ void AmethystSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Amethyst_Slime.png" );
   e->base = 10;
+  
   dVec3_t pos = {0};
   float mass = 10;
   float max_speed = 1;

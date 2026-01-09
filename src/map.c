@@ -54,16 +54,15 @@ void Map_Init( void )
 void Map_Draw( void )
 {
   int n;
-  dVec3_t pos = {0};
 
   for ( int i = 0; i < MAP_SIZE; i++ )
   {
     for ( int j = 0; j < MAP_SIZE; j++ )
     {
+      dVec3_t pos = { .x = i, .y = 0, .z = j };
+
       int index = INDEX_2( i, j, MAP_SIZE );
       n = world.map[index].tile;
-      pos.x = i;
-      pos.z = j;
 
       if ( n >= 0 )
       {
