@@ -4,6 +4,7 @@
 #include "defines.h"
 #include "entity_factory.h"
 #include "structs.h"
+#include "map.h"
 #include "utils.h"
 
 extern World_t world;
@@ -17,8 +18,20 @@ void SlimesLogic( float dt )
     e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
     if ( e == NULL ) continue;
 
-    if ( e == world.player ) continue;
+    if ( e == world.player &&
+         !strncmp( e->name, "bullet", MAX_NAME_LENGTH ) ) continue; // if not
+    // player and not bullet then it must be a slime
 
+    if ( CheckMapBounds( e->body->position.x, e->body->position.z ) )
+    {
+      d_KinematicBodySeek( e->body, world.player->body->position );
+      d_KinematicBodyUpdate( e->body );
+    }
+
+    else
+    {
+      e->dead = 1;
+    }
   } 
 }
 
@@ -36,8 +49,8 @@ void AmethystSlimeInit( int x, int z )
     "resources/assets/Enemies/Amethyst_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void BlackSlimeInit( int x, int z )
@@ -53,8 +66,8 @@ void BlackSlimeInit( int x, int z )
     "resources/assets/Enemies/Black_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void BlueSlimeInit( int x, int z )
@@ -70,8 +83,8 @@ void BlueSlimeInit( int x, int z )
     "resources/assets/Enemies/Blue_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void BronzeSlimeInit( int x, int z )
@@ -87,8 +100,8 @@ void BronzeSlimeInit( int x, int z )
     "resources/assets/Enemies/Bronze_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void ChocolateSlimeInit( int x, int z )
@@ -104,8 +117,8 @@ void ChocolateSlimeInit( int x, int z )
     "resources/assets/Enemies/Chocolate_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void GoldSlimeInit( int x, int z )
@@ -121,8 +134,8 @@ void GoldSlimeInit( int x, int z )
     "resources/assets/Enemies/Gold_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void GreenSlimeInit( int x, int z )
@@ -138,8 +151,8 @@ void GreenSlimeInit( int x, int z )
     "resources/assets/Enemies/Green_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void InvertedSlimeInit( int x, int z )
@@ -155,8 +168,8 @@ void InvertedSlimeInit( int x, int z )
     "resources/assets/Enemies/Inverted_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void MarmaladeSlimeInit( int x, int z )
@@ -172,8 +185,8 @@ void MarmaladeSlimeInit( int x, int z )
     "resources/assets/Enemies/Marmalade_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void MintSlimeInit( int x, int z )
@@ -189,8 +202,8 @@ void MintSlimeInit( int x, int z )
     "resources/assets/Enemies/Mint_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void ObsidianSlimeInit( int x, int z )
@@ -206,8 +219,8 @@ void ObsidianSlimeInit( int x, int z )
     "resources/assets/Enemies/Obsidian_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void PollutedSlimeInit( int x, int z )
@@ -223,8 +236,8 @@ void PollutedSlimeInit( int x, int z )
     "resources/assets/Enemies/Polluted_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void PrimordialSlimeInit( int x, int z )
@@ -240,8 +253,8 @@ void PrimordialSlimeInit( int x, int z )
     "resources/assets/Enemies/Primordial_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void PurpleSlimeInit( int x, int z )
@@ -257,8 +270,8 @@ void PurpleSlimeInit( int x, int z )
     "resources/assets/Enemies/Purple_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void RadioactiveSlimeInit( int x, int z )
@@ -274,8 +287,8 @@ void RadioactiveSlimeInit( int x, int z )
     "resources/assets/Enemies/Radioactive_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void RedSlimeInit( int x, int z )
@@ -291,8 +304,8 @@ void RedSlimeInit( int x, int z )
     "resources/assets/Enemies/Red_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void SandstoneSlimeInit( int x, int z )
@@ -308,8 +321,8 @@ void SandstoneSlimeInit( int x, int z )
     "resources/assets/Enemies/SandStone_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void StoneSlimeInit( int x, int z )
@@ -325,8 +338,8 @@ void StoneSlimeInit( int x, int z )
     "resources/assets/Enemies/Stone_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void WaterSlimeInit( int x, int z )
@@ -342,8 +355,8 @@ void WaterSlimeInit( int x, int z )
     "resources/assets/Enemies/Water_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 
 void WhiteSlimeInit( int x, int z )
@@ -359,7 +372,7 @@ void WhiteSlimeInit( int x, int z )
     "resources/assets/Enemies/White_Slime.png",
     w, h, frame_count, frame_duration );
   
-  e->x = x;
-  e->z = z;
+  e->body->position.x = x;
+  e->body->position.z = z;
 }
 

@@ -48,26 +48,26 @@ static void PlayerMovements( int key_value, float dt )
 {
   if ( world.player->state == STATE_IDLE ) return;
 
-  int dx = 0;
-  int dz = 0;
+  dVec3_t dvec = {0};
 
-  int speed = world.player->speed;
+  int speed = world.player->body->max_speed;
 
   switch ( key_value )
   {
-    case FACING_NORTH: dx =  speed; break;
-    case FACING_EAST:  dz =  speed; break;
-    case FACING_SOUTH: dx = -speed; break;
-    case FACING_WEST:  dz = -speed; break;
+    case FACING_NORTH: dvec.x =  speed; break;
+    case FACING_EAST:  dvec.z =  speed; break;
+    case FACING_SOUTH: dvec.x = -speed; break;
+    case FACING_WEST:  dvec.z = -speed; break;
     
-    case FACING_NORTH_EAST: dx =  speed; dz =  speed; break;
-    case FACING_SOUTH_EAST: dx = -speed; dz =  speed; break;
-    case FACING_SOUTH_WEST: dx = -speed; dz = -speed; break;
-    case FACING_NORTH_WEST: dx =  speed; dz = -speed; break;
+    case FACING_NORTH_EAST: dvec.x =  speed; dvec.z =  speed; break;
+    case FACING_SOUTH_EAST: dvec.x = -speed; dvec.z =  speed; break;
+    case FACING_SOUTH_WEST: dvec.x = -speed; dvec.z = -speed; break;
+    case FACING_NORTH_WEST: dvec.x =  speed; dvec.z = -speed; break;
   }
-
-  world.player->x += ( dx * dt );
-  world.player->z += ( dz * dt );
+  
+  d_ScaleMultiplyVec3f( &dvec, dvec, dt );
+  d_KinematicBodyApplyForce( world.player->body, dvec );
+  d_KinematicBodyUpdate( world.player->body );
 }
 
 static int PlayerDirection( void )

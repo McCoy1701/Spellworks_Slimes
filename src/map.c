@@ -54,6 +54,7 @@ void Map_Init( void )
 void Map_Draw( void )
 {
   int n;
+  dVec3_t pos = {0};
 
   for ( int i = 0; i < MAP_SIZE; i++ )
   {
@@ -61,12 +62,14 @@ void Map_Draw( void )
     {
       int index = INDEX_2( i, j, MAP_SIZE );
       n = world.map[index].tile;
+      pos.x = i;
+      pos.z = j;
 
       if ( n >= 0 )
       {
         if ( i == world.cursor_x && j == world.cursor_y )
         {
-          ISO_AddStaticObject( i, j, 0, 0, selected_tile, LAYER_BACKGROUND );
+          ISO_AddStaticObject( pos, 0, 0, selected_tile, LAYER_BACKGROUND );
         }
 
         else
@@ -74,8 +77,7 @@ void Map_Draw( void )
           aImage_t* img = tiles[n];
           img->color_modulate = world.map[index].modulate_color;
           img->color = world.map[index].color;
-          //printf("map draw: %d, %d %d\n", img->color_modulate, i, j );
-          ISO_AddStaticObject( i, j, 0, 0, img, LAYER_BACKGROUND );
+          ISO_AddStaticObject( pos, 0, 0, img, LAYER_BACKGROUND );
         }
       }
     }
@@ -104,8 +106,8 @@ int CheckMapBounds( int x, int z )
 
 int CheckPlayersBounds( void )
 {
-  return ( world.player->x >= 0 &&
-           world.player->z >= 0 && 
-           world.player->x <= MAP_SIZE &&
-           world.player->z <= MAP_SIZE );
+  return ( world.player->body->position.x >= 0 &&
+           world.player->body->position.z >= 0 && 
+           world.player->body->position.x <= MAP_SIZE &&
+           world.player->body->position.z <= MAP_SIZE );
 }

@@ -26,8 +26,7 @@ typedef struct _entity
 typedef struct _item_t
 {
   char name[MAX_NAME_LENGTH];
-  float x;
-  float z;
+  dKinematicBody_t* body;
   int base;
   int layer;
   int picked_up;
@@ -38,8 +37,7 @@ typedef struct _item_t
 
 typedef struct
 {
-  float x;  //world space
-  float y;
+  dKinematicBody_t* body;
   float sx;  //screen space
   float sy;
   int layer;

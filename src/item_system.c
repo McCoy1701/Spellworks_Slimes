@@ -32,7 +32,7 @@ void ItemsDraw( void )
     }
 
     CalculateScreenPos( item->img, item->base, &sx, &sy );
-    ISO_AddStaticObject( item->x, item->z, sx, sy, item->img, LAYER_MID );
+    ISO_AddStaticObject( item->body->position, sx, sy, item->img, LAYER_MID );
   }
 }
 

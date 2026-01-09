@@ -35,8 +35,8 @@ void BulletInit( void )
     "resources/assets/projectiles/bullet/Bullet_SheetD.png",
     w, h, frame_count, frame_duration );
   
-  e->x = world.player->x;
-  e->z = world.player->z;
+  e->body->position.x = world.player->body->position.x;
+  e->body->position.z = world.player->body->position.z;
 }
 
 void BulletLogic( float dt )
@@ -49,28 +49,27 @@ void BulletLogic( float dt )
     
     if ( strncmp( e->name, "bullet", MAX_NAME_LENGTH ) == 0 )
     {
-      if ( CheckMapBounds( e->x, e->z ) )
+      if ( CheckMapBounds( e->body->position.x, e->body->position.z ) )
       {
-        int dx = 0;
-        int dz = 0;
+        dVec3_t dvec = {0};
 
-        int speed = e->speed;
-
+        int speed = e->body->max_speed;
         switch ( e->facing )
         {
-          case FACING_NORTH: dx =  speed; break;
-          case FACING_EAST:  dz =  speed; break;
-          case FACING_SOUTH: dx = -speed; break;
-          case FACING_WEST:  dz = -speed; break;
+          case FACING_NORTH: dvec.x =  speed; break;
+          case FACING_EAST:  dvec.z =  speed; break;
+          case FACING_SOUTH: dvec.x = -speed; break;
+          case FACING_WEST:  dvec.z = -speed; break;
 
-          case FACING_NORTH_EAST: dx =  speed; dz =  speed; break;
-          case FACING_SOUTH_EAST: dx = -speed; dz =  speed; break;
-          case FACING_SOUTH_WEST: dx = -speed; dz = -speed; break;
-          case FACING_NORTH_WEST: dx =  speed; dz = -speed; break;
+          case FACING_NORTH_EAST: dvec.x =  speed; dvec.z =  speed; break;
+          case FACING_SOUTH_EAST: dvec.x = -speed; dvec.z =  speed; break;
+          case FACING_SOUTH_WEST: dvec.x = -speed; dvec.z = -speed; break;
+          case FACING_NORTH_WEST: dvec.x =  speed; dvec.z = -speed; break;
         }
 
-        e->x += ( dx * dt );
-        e->z += ( dz * dt );
+        d_ScaleMultiplyVec3f( &dvec, dvec, dt );
+        d_KinematicBodyApplyForce( e->body, dvec );
+        d_KinematicBodyUpdate( e->body );
       }
       
       else

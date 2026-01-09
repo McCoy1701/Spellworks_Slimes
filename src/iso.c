@@ -1,5 +1,5 @@
-
 #include <Archimedes.h>
+#include <Daedalus.h>
 
 #include "defines.h"
 #include "structs.h"
@@ -63,29 +63,31 @@ void ISO_Clear( void )
   iso_object_count = 0;
 }
 
-void ISO_Convert( float x, float z, float* sx, float* sy )
+void ISO_Convert( dVec3_t pos, float* sx, float* sy )
 {
-  *sx = MAP_RENDER_X_OFFSET + ( ( x * CELL_WIDTH / 2 ) + ( z * CELL_WIDTH / 2 ) );
-  *sy = MAP_RENDER_Y_OFFSET + ( ( z * CELL_HEIGHT / 2 ) - ( x * CELL_HEIGHT / 2 ) );
+  *sx = MAP_RENDER_X_OFFSET + ( ( pos.x * CELL_WIDTH / 2 ) + ( pos.z * CELL_WIDTH / 2 ) );
+  *sy = MAP_RENDER_Y_OFFSET + ( ( pos.z * CELL_HEIGHT / 2 ) - ( pos.x * CELL_HEIGHT / 2 ) );
 }
 
-void ISO_AddAnimatedObject( float x, float z, float sx, float sy, aAnimation_t* anim, int layer )
+void ISO_AddAnimatedObject( dVec3_t pos, float sx, float sy,
+                            aAnimation_t* anim, int layer )
 {
   ISO_Object_t* o;
   if ( iso_object_count < MAX_ISO_OBJECTS )
   {
     o = &iso_objects[iso_object_count++];
-    ISO_Convert( x, z, &o->x, &o->y );
+    ISO_Convert( pos, &o->body->position.x, &o->body->position.z );
 
-    o->sx = o->x + sx;
-    o->sy = o->y + sy;
+    o->sx = o->body->position.x + sx;
+    o->sy = o->body->position.z + sy;
     o->layer = layer;
     o->anim = anim;
     o->animated = 1;
   }
 }
 
-void ISO_AddStaticObject( float x, float z, float sx, float sy, aImage_t* img, int layer )
+void ISO_AddStaticObject( dVec3_t pos, float sx, float sy, aImage_t* img,
+                          int layer )
 {
   ISO_Object_t* o;
 
@@ -93,10 +95,10 @@ void ISO_AddStaticObject( float x, float z, float sx, float sy, aImage_t* img, i
   {
     o = &iso_objects[iso_object_count++];
 
-    ISO_Convert( x, z, &o->x, &o->y );
+    ISO_Convert( pos, &o->body->position.x, &o->body->position.z );
 
-    o->sx = o->x + sx;
-    o->sy = o->y + sy;
+    o->sx = o->body->position.x + sx;
+    o->sy = o->body->position.z + sy;
     o->layer = layer;
     o->img = img;
     o->modulate_color = img->color_modulate;
@@ -104,17 +106,20 @@ void ISO_AddStaticObject( float x, float z, float sx, float sy, aImage_t* img, i
   }
 }
 
-int ISO_CheckBounds( float x, float z )
+int ISO_CheckBounds( dVec3_t pos )
 {
   float min_x, min_y;
   float max_x, max_y;
-  ISO_Convert( 0, 0, &min_x, &min_y );
-  ISO_Convert( MAP_SIZE, MAP_SIZE, &max_x, &max_y );
+  dVec3_t zero_pos = {0};
+  dVec3_t map_max_pos = (dVec3_t){ .x = MAP_SIZE, .z = MAP_SIZE };
+  
+  ISO_Convert( zero_pos, &min_x, &min_y );
+  ISO_Convert( map_max_pos, &max_x, &max_y );
 
-  return ( x >= 0 &&
-           z >= 0 && 
-           x <= max_x &&
-           z <= max_y );
+  return ( pos.x >= 0 &&
+           pos.z >= 0 && 
+           pos.x <= max_x &&
+           pos.z <= max_y );
 }
 
 static int draw_comparator( const void* a, const void* b )
@@ -122,8 +127,8 @@ static int draw_comparator( const void* a, const void* b )
   ISO_Object_t* o1, *o2;
   o1 = *(ISO_Object_t**)a;
   o2 = *(ISO_Object_t**)b;
-  if ( o1->y < o2->y ) return -1;
-  if ( o1->y > o2->y ) return 1;
+  if ( o1->body->position.z < o2->body->position.z ) return -1;
+  if ( o1->body->position.z > o2->body->position.z ) return 1;
   return 0;
 }
 
