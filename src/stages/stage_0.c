@@ -30,6 +30,7 @@ void Stage0Init( void )
   
   world.stats.tl_entities = 0;  
   world.stats.tl_projectiles = 0;  
+  world.gravity = (dVec3_t){ 0, -9.81, 0 };
   
   Map_Init();
 

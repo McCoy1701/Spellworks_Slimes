@@ -51,7 +51,7 @@ void ProjectileDraw( void )
     }
 
     
-    ISO_AddAnimatedObject( e->body->position, sx+48, sy+48,
+    ISO_AddAnimatedObject( e->transform->position, sx+48, sy+48,
                            e->running[facing], LAYER_MID ); //find out why 50
   }
 }

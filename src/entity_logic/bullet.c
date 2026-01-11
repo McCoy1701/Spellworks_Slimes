@@ -35,8 +35,8 @@ void BulletInit( void )
     "resources/assets/projectiles/bullet/Bullet_SheetD.png",
     w, h, frame_count, frame_duration );
   
-  e->body->position.x = world.player->body->position.x;
-  e->body->position.z = world.player->body->position.z;
+  e->transform->position.x = world.player->transform->position.x;
+  e->transform->position.z = world.player->transform->position.z;
 }
 
 void BulletLogic( float dt )
@@ -49,7 +49,8 @@ void BulletLogic( float dt )
     
     if ( strncmp( e->name, "bullet", MAX_NAME_LENGTH ) == 0 )
     {
-      if ( CheckMapBounds( e->body->position.x, e->body->position.z ) )
+      if ( CheckMapBounds( e->transform->position.x,
+                           e->transform->position.z ) )
       {
         dVec3_t dvec = {0};
 
@@ -69,7 +70,7 @@ void BulletLogic( float dt )
 
         d_ScaleMultiplyVec3f( &dvec, dvec, dt );
         d_KinematicBodyApplyForce( e->body, dvec );
-        d_KinematicBodyUpdate( e->body );
+        d_KinematicBodyUpdate( e->body, e->transform, dt );
       }
       
       else

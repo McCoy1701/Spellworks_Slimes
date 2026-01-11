@@ -66,8 +66,8 @@ static void PlayerMovements( int key_value, float dt )
   }
   
   d_ScaleMultiplyVec3f( &dvec, dvec, dt );
-  d_KinematicBodyApplyForce( world.player->body, dvec );
-  d_KinematicBodyUpdate( world.player->body );
+  d_KinematicBodyApplyForce( world.player->body, world.gravity );
+  d_KinematicBodyUpdate( world.player->body, world.player->transform, dt );
 }
 
 static int PlayerDirection( void )

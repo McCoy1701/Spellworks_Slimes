@@ -105,8 +105,8 @@ int CheckMapBounds( int x, int z )
 
 int CheckPlayersBounds( void )
 {
-  return ( world.player->body->position.x >= 0 &&
-           world.player->body->position.z >= 0 && 
-           world.player->body->position.x <= MAP_SIZE &&
-           world.player->body->position.z <= MAP_SIZE );
+  return ( world.player->transform->position.x >= 0 &&
+           world.player->transform->position.z >= 0 && 
+           world.player->transform->position.x <= MAP_SIZE &&
+           world.player->transform->position.z <= MAP_SIZE );
 }

@@ -41,20 +41,20 @@ void EntitiesDraw( void )
     {
       if ( e->state == STATE_RUN )
       {
-        ISO_AddAnimatedObject( e->body->position, sx, sy,
+        ISO_AddAnimatedObject( e->transform->position, sx, sy,
                                e->running[e->facing], LAYER_MID );
       }
       
       else if ( e->state == STATE_IDLE )
       {
-        ISO_AddAnimatedObject( e->body->position, sx, sy,
+        ISO_AddAnimatedObject( e->transform->position, sx, sy,
                                e->idle[e->facing], LAYER_MID );
       }
     }
     
     else
     {
-      ISO_AddAnimatedObject( e->body->position, sx, sy,
+      ISO_AddAnimatedObject( e->transform->position, sx, sy,
                              e->running[0], LAYER_MID );
     }
   }
@@ -68,7 +68,7 @@ Entity_t* EntitiesAt( int x, int z )
     e = (Entity_t*)d_ArrayGet( world.entity_pool, i );
     if ( e == NULL ) return NULL;
     
-    if ( e->body->position.x == x && e->body->position.z == z )
+    if ( e->transform->position.x == x && e->transform->position.z == z )
     {
       return e;
     }
@@ -89,8 +89,8 @@ static void AddEntities( void )
   {
     printf("no body\n");
   }
-  e->body->position.x = x;
-  e->body->position.z = z;
+  e->transform->position.x = x;
+  e->transform->position.z = z;
 }
 
 static void PlaceRandom( int* x, int* z )

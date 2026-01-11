@@ -9,29 +9,47 @@
 typedef struct _entity
 {
   char name[MAX_NAME_LENGTH];
+  int id;
+  
+  dTransform_t* transform;
+  uint8_t is_trigger;
+  uint8_t is_static;
+  uint8_t is_dynamic;
+
   dKinematicBody_t* body;
+ 
   int base;
   int layer;
+ 
   int dead;
   int state;
-  int id;
   unsigned long flags;
   unsigned long iso_flags;
+ 
+  int facing;
+  
   aAnimation_t* running[FACING_MAX];
   aAnimation_t* idle[FACING_MAX];
   aImage_t* img;
-  int facing;
 }Entity_t;
 
 typedef struct _item_t
 {
   char name[MAX_NAME_LENGTH];
+  dTransform_t* transform;
+  uint8_t is_trigger;
+  uint8_t is_static;
+  uint8_t is_dynamic;
+
   dKinematicBody_t* body;
+  
   int base;
   int layer;
+  
   int picked_up;
   int weight;
   unsigned long flags;
+  
   aImage_t* img;
 }Item_t;
 
@@ -41,10 +59,13 @@ typedef struct
   float z;
   float sx;  //screen space
   float sz;
+  
   int layer;
   int animated;
+  
   aImage_t* img;
   aAnimation_t* anim;
+  
   int modulate_color;
   aColor_t color;
 } ISO_Object_t;
@@ -73,6 +94,7 @@ typedef struct
   Stats_t stats;
   Entity_t* player;
   aRectf_t player_iso_rect;
+  dVec3_t gravity; 
   int cursor_x, cursor_y;
   aTimer_t stage_timer;
 } World_t;

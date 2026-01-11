@@ -1,7 +1,7 @@
-#include "enemy_spawner.h"
 #include <Archimedes.h>
 
 #include "defines.h"
+#include "enemy_spawner.h"
 #include "entity_logic/slimes.h"
 #include "entity_factory.h"
 #include "iso.h"
