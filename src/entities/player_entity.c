@@ -15,8 +15,8 @@ void PlayerEntityInit( Entity_t* e )
   dVec3_t force    = {0};
 
   float   mass          = 10.0f;
-  float   max_speed     = 8.0f;
-  float   max_force     = 0.2f;
+  float   max_speed     = 2.0f;
+  float   max_force     = 5.0f;
   uint8_t takes_gravity = 1;
 
   float   static_friction = 0.0f;
