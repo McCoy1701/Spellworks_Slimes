@@ -68,9 +68,12 @@ void BulletLogic( float dt )
           case FACING_NORTH_WEST: dvec.x =  speed; dvec.z = -speed; break;
         }
 
-        d_ScaleMultiplyVec3f( &dvec, dvec, dt );
+        /*d_ScaleMultiplyVec3f( &dvec, dvec, dt );
         d_KinematicBodyApplyForce( e->body, dvec );
-        d_KinematicBodyUpdate( e->body, e->transform, dt );
+        d_KinematicBodyUpdate( e->body, e->transform, dt );*/
+
+        e->transform->position.x += ( dvec.x * dt );
+        e->transform->position.z += ( dvec.z * dt );
       }
       
       else

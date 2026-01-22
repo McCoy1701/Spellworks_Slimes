@@ -3,15 +3,15 @@
 
 #include "structs.h"
 
-void CalculateScreenPos( aImage_t* img, int base, int* sx, int* sy )
+void CalculateScreenPos( aImage_t* img, int base, int* sx, int* sz )
 {
   if ( img == NULL ) return;
   *sx = CELL_WIDTH / 2;
   *sx -= img->rect.w / 2;
   
-  *sy = CELL_HEIGHT / 2;
-  *sy -= img->rect.h;
-  *sy -= base;
+  *sz = CELL_HEIGHT / 2;
+  *sz -= img->rect.h;
+  *sz -= base;
 }
 
 void LoadAnimation( int w, int h, int frame_count,

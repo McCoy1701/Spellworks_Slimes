@@ -1,4 +1,3 @@
-
 #include <Archimedes.h>
 
 #include "defines.h"
@@ -8,6 +7,7 @@
 #include "utils.h"
 
 extern World_t world;
+static const float separation_force_radius = 1.0f; // Distance to avoid other enemies
 
 void SlimesLogic( float dt )
 {
@@ -22,12 +22,67 @@ void SlimesLogic( float dt )
          strncmp( e->name, "bullet", MAX_NAME_LENGTH ) == 0 ) continue; // if not
     // player and not bullet then it must be a slime
     
-    d_KinematicBodySeek( e->body, e->transform,
-                         world.player->transform->position );
-    d_KinematicBodyUpdate( e->body, e->transform, dt );
+    //take the difference between player and enemy, calculate the length of that
+    //difference. now the velocity is delta/length * enemy_speed. position +=
+    //velocity * dt will move the enemy.
+    
+    // Calculate separation from nearby enemies (avoid clumping)
+    float sep_x = 0.0f;
+    float sep_z = 0.0f;
+
+    for ( int j = 0; j < world.entity_pool->count; j++ )
+    {
+      Entity_t* temp_e = (Entity_t*)d_ArrayGet( world.entity_pool, j );
+      if ( temp_e == NULL ) continue;
+
+      if ( i != j && e->state != STATE_IDLE )
+      {
+        float ex = e->transform->position.x - temp_e->transform->position.x;
+        float ez = e->transform->position.z - temp_e->transform->position.z;
+        float edist = sqrtf(ex * ex + ez * ez);
+
+        if ( edist < separation_force_radius && edist > 0.1f )
+        {
+          // Push away from nearby enemies
+          float push_strength = ( separation_force_radius - edist ) /
+            separation_force_radius;
+          sep_x += ( ex / edist ) * push_strength;
+          sep_z += ( ez / edist ) * push_strength;
+        }
+      }
+    }
+    
+    float dx = ( world.player->transform->position.x - 
+      e->transform->position.x ) + sep_x;
+    
+    float dz = ( world.player->transform->position.z -
+      e->transform->position.z ) + sep_z;
+
+    float delta_len = d_Sqrtf( dx * dx + dz * dz );
+    
+    float vx, vz;
+    
+    if ( delta_len > 0.1f)
+    {
+      vx = ( dx / delta_len ) * ENEMY_SPEED;
+      vz = ( dz / delta_len ) * ENEMY_SPEED;
+
+      e->state = STATE_RUN;
+    }
+    
+    else
+    {
+      vx = 0;
+      vz = 0;
+
+      e->state = STATE_IDLE;
+    }
+
+    e->transform->position.x += ( vx * dt );
+    e->transform->position.z += ( vz * dt );
+
   } 
 }
-
 
 void AmethystSlimeInit( int x, int z )
 {

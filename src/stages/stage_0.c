@@ -12,6 +12,7 @@
 #include "map.h"
 #include "projectiles.h"
 #include "structs.h"
+#include "utils.h"
 
 static void Do_Cursor( void );
 
@@ -88,10 +89,6 @@ static void s0_Draw( float dt )
   EntitiesDraw();
   ProjectileDraw();
   ISO_Draw();
-
-  aColor_t color_something = { .r = 0, .g = 0, .b = 255, .a = 255 };
-  aRectf_t rect_something = { .x = 100, .y = 100, .w = 32, .h = 32 };
-  a_DrawFilledRect( rect_something, color_something );
   
   char fps_text[MAX_NAME_LENGTH];
   snprintf(fps_text, MAX_NAME_LENGTH, "%f", app.time.avg_FPS );
@@ -108,7 +105,7 @@ static void s0_Draw( float dt )
 
   a_DrawText( fps_text, 600, 100, fps_style );
 
-  a_DrawWidgets();
+  //a_DrawWidgets();
 }
 
 static void Do_Cursor( void )

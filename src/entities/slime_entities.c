@@ -7,7 +7,7 @@ extern World_t world;
 void AmethystSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Amethyst_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -41,7 +41,7 @@ void AmethystSlimeEntityInit( Entity_t* e )
 void BlackSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Black_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -75,7 +75,7 @@ void BlackSlimeEntityInit( Entity_t* e )
 void BlueSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Blue_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -109,7 +109,7 @@ void BlueSlimeEntityInit( Entity_t* e )
 void BronzeSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Bronze_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -143,7 +143,7 @@ void BronzeSlimeEntityInit( Entity_t* e )
 void ChocolateSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Chocolate_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -177,7 +177,7 @@ void ChocolateSlimeEntityInit( Entity_t* e )
 void GoldSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Gold_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -211,7 +211,7 @@ void GoldSlimeEntityInit( Entity_t* e )
 void GreenSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Green_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -245,7 +245,7 @@ void GreenSlimeEntityInit( Entity_t* e )
 void InvertedSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Inverted_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -279,7 +279,7 @@ void InvertedSlimeEntityInit( Entity_t* e )
 void MarmaladeSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Marmalade_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -313,7 +313,7 @@ void MarmaladeSlimeEntityInit( Entity_t* e )
 void MintSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Mint_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -347,7 +347,7 @@ void MintSlimeEntityInit( Entity_t* e )
 void ObsidianSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Obsidian_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -381,7 +381,7 @@ void ObsidianSlimeEntityInit( Entity_t* e )
 void PollutedSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Polluted_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -415,7 +415,7 @@ void PollutedSlimeEntityInit( Entity_t* e )
 void PrimordialSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Primodial_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -449,7 +449,7 @@ void PrimordialSlimeEntityInit( Entity_t* e )
 void PurpleSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Purple_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -483,7 +483,7 @@ void PurpleSlimeEntityInit( Entity_t* e )
 void RadioactiveSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Radioactive_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -517,7 +517,7 @@ void RadioactiveSlimeEntityInit( Entity_t* e )
 void RedSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Red_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -551,7 +551,7 @@ void RedSlimeEntityInit( Entity_t* e )
 void SandstoneSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/SandStone_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -585,7 +585,7 @@ void SandstoneSlimeEntityInit( Entity_t* e )
 void StoneSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Stone_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -619,7 +619,7 @@ void StoneSlimeEntityInit( Entity_t* e )
 void WaterSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/Water_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};
@@ -653,7 +653,7 @@ void WaterSlimeEntityInit( Entity_t* e )
 void WhiteSlimeEntityInit( Entity_t* e )
 {
   e->img = a_ImageLoad( "resources/assets/Enemies/White_Slime.png" );
-  e->base = 10;
+  e->base = 35;
   
   dVec3_t gravity  = {0};
   dVec3_t velocity = {0};

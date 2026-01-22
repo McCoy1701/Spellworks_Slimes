@@ -19,6 +19,9 @@
 #define MAX_GROUND_ITEMS 256
 #define ISO_RENDER_SPEED 250
 
+#define ENEMY_RADIUS 1.0f
+#define ENEMY_SPEED 4.0f
+
 #define ROOT2OVER2 0.7071067812
 
 #define INDEX_3( x, y, z, width, height ) ( ( z * ( width * height ) )\
